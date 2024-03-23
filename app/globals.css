@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* colors for the darkmode */
+:root {
+  --background: #090E0C;
+  --text: white;
+  --seconary: #ACD1C2;
+  --primary: #39765D;
+  --accent: #88C6AD;
+}
