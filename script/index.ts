@@ -2,8 +2,10 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
-import fs from "fs"
+import fs from "fs";
+import ora from 'ora';
 import path from "path";
+import { execSync } from "child_process";
 
 /**the version of the CLI, please update this*/
 const version = "0.0.1";
@@ -44,3 +46,29 @@ await inquirer.prompt({
         // the file exists
     });
 })
+
+// creating a spinner to show a loading state
+const spinner = ora('add the tab group "content"\n').start();
+
+// path to the app directory
+const app_path = path.join("./app")
+
+// checks if the folder already exists
+if (!fs.existsSync("./app/(content)")) {
+    fs.mkdirSync("./app/(content)");
+}
+// all done, stopping the spinner
+spinner.stop()
+
+// asking which content routes the user wants
+await inquirer.prompt({
+    type: "input",
+    name: "route",
+    message: "What should the name of the content route be?"
+})
+
+setTimeout(() => {
+    spinner.color = 'yellow';
+    spinner.text = 'Loading rainbows';
+    spinner.stop()
+}, 1000);
