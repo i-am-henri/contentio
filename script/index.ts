@@ -2,6 +2,8 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
+import fs from "fs"
+import path from "path";
 
 /**the version of the CLI, please update this*/
 const version = "0.0.1";
@@ -32,4 +34,13 @@ await inquirer.prompt({
         console.log('(https://github.com/i-am-henri/next-docs)')
         process.exit(1)
     }
+    const filePath = path.join("./package.json");
+
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.log(chalk.bgRed("We can't find a package.json file, please check if you are on the root of your project."))
+            process.exit(1)
+        }
+        // the file exists
+    });
 })
