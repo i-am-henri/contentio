@@ -4,8 +4,9 @@
   "description": "This is a CLI to add content in form of mdx fast to your next application.",
   "main": "index.js",
   "type": "module",
+  "module": "esnext",
   "scripts": {
-    "dev": "tsc --module esnext && node index.js"
+    "dev": "tsc --module esnext && node ./build/index.js"
   },
   "keywords": [
     "next docs",
@@ -25,6 +26,7 @@
     "@types/inquirer": "^9.0.7",
     "chalk": "^5.3.0",
     "inquirer": "^9.2.16",
+    "terminal-link": "^3.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
   }
