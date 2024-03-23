@@ -2,7 +2,10 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
+
+/**the version of the CLI, please update this*/
 const version = "0.0.1";
+
 console.log(`${chalk.bgWhite(`next-docs, version ${version}`)} \n`);
 
 // checks if you on the root of your project
