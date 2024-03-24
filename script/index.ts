@@ -48,6 +48,18 @@ await inquirer.prompt({
     });
 })
 await inquirer.prompt({
+    type: "confirm",
+    name: "language",
+    message: "Are you using Typescipt?"
+}).then(async (data) => {
+    if (data.language == false) {
+        console.log(chalk.bgRed("We aren't supporting Javascript yet."))
+        console.log(`You can help us by creating a supported version of this cli ${terminalLink("here", "https://github.com/i-am-henri/next-docs")}.`)
+        console.log('(https://github.com/i-am-henri/next-docs)')
+        process.exit(1)
+    }
+})
+await inquirer.prompt({
     type: "list",
     name: "content_folder",
     message: "What name should the content folder has?",
@@ -87,7 +99,63 @@ async function addRoute(route: number,) {
         message: `Add a new route name by typing the name in (${route + 1}. tabgroup): `
     }).then(async (data) => {
         // add a new route to the content tab group
+        if (!fs.existsSync("./app/(content)/" + data.add_route)) {
+            fs.mkdirSync("./app/(content)/" + data.add_route);
+        }
+        fs.mkdirSync("./app/(content)/" + data.add_route + "/[...slug]");
+        const route_path = path.join("./app/(content)/" + data.add_route)
 
+        fs.writeFile(`./app/(cotent)/${data.add_route}/[...slug]/${data.add_route}.ts`, `
+        // file added by next-docs
+        import { compileMDX } from "next-mdx-remote/rsc";
+        import { notFound } from "next/navigation";
+        import fs from "node:fs"
+        export async function getMarkdown(slug: string): Promise<string> {
+          let raw: string = ""
+          await fs.promises.readFile("content/blog/" + slug + ".mdx", 'utf-8').then((data) => {
+            raw = data;
+          }).catch((err) => {
+            console.log(err.code)
+            if (err.code == "ENOENT") notFound()
+          })
+          if (raw == "") {
+            notFound()
+          }
+          return raw
+        }
+        `, (err) => {
+            // handle an error
+        })
+        fs.writeFile(`./app/(cotent)/${data.add_route}/[...slug]/page.tsx`, `
+        // file added by next-docs
+        import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
+        import { getMarkdown } from './${data.add_route}'
+        import { Metadata } from 'next'
+
+        export async function generateMetadata({
+          params,
+        }: { params: { slug: string } }): Promise<Metadata | undefined> {
+          const raw = await getMarkdown(params.slug[0])
+          const { content, frontmatter } = await compileMDX<{ title: string, date: string, description: string, }>({
+            source: raw,
+            options: { parseFrontmatter: true },
+          })
+          return {
+            title: frontmatter.title,
+            description: frontmatter.description,
+          }
+        }
+
+        export default async function Page({
+          params
+        }: { params: { slug: string } }) {
+          const raw = await getMarkdown(params.slug[0])
+          const withoutFrontmatter: string = raw.replace(/---[\s\S]*?---/, '');
+          return <MDXRemote source={withoutFrontmatter} />
+        }
+        `, (err) => {
+            // handle an error
+        })
     })
 }
 
@@ -107,7 +175,7 @@ await inquirer.prompt({
             name: "route",
             message: "What should the name of the content route be?"
         }).then(async (data) => {
-            
+
         })
         return
     }
@@ -125,7 +193,7 @@ await inquirer.prompt({
         }
         const { route_quantity } = parseSchema.data
         console.log(data)
-        
+
         for (let i = 0; i < route_quantity.toString().length; i++) {
             await addRoute(i)
         }
