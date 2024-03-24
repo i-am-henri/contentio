@@ -3,7 +3,7 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
 import fs from "fs";
-import ora from 'ora';
+import ora from "ora"
 import path from "path";
 import { execSync } from "child_process";
 import { z } from "zod";
@@ -33,7 +33,7 @@ await inquirer.prompt({
 }).then((data) => {
     if (data.app_directory == false) {
         console.log(chalk.bgRed("\n\nSorry, but we aren't supporting the pages direcory yet."))
-        console.log(`You can help us creating a supported version of this cli ${terminalLink("here", "https://github.com/i-am-henri/next-docs")}.`)
+        console.log(`You can help us by creating a supported version of this cli ${terminalLink("here", "https://github.com/i-am-henri/next-docs")}.`)
         console.log('(https://github.com/i-am-henri/next-docs)')
         process.exit(1)
     }
@@ -47,9 +47,29 @@ await inquirer.prompt({
         // the file exists
     });
 })
-
-// creating a spinner to show a loading state
-const spinner = ora('add the tab group "content"\n').start();
+await inquirer.prompt({
+    type: "list",
+    name: "content_folder",
+    message: "What name should the content folder has?",
+    choices: ["content", "markdown", "blog", "other"]
+}).then(async (data) => {
+    if (data.content_folder == "other") {
+        await inquirer.prompt({
+            type: "input",
+            message: "The name of the folder which contains the content:",
+            name: "content_folder_name"
+        }).then((data) => {
+            if (!fs.existsSync(`./${data.content_folder_name}`)) {
+                fs.mkdirSync(`./${data.content_folder_name}`);
+            }
+            console.log(chalk.bgGreen("Folder created"))
+        })
+    }
+    if (!fs.existsSync(`./${data.content_folder}`)) {
+        fs.mkdirSync(`./${data.content_folder}`);
+    }
+    console.log(chalk.bgGreen("Folder created"))
+})
 
 // path to the app directory
 const app_path = path.join("./app")
@@ -58,16 +78,16 @@ const app_path = path.join("./app")
 if (!fs.existsSync("./app/(content)")) {
     fs.mkdirSync("./app/(content)");
 }
-// all done, stopping the spinner
-spinner.stop()
+console.log(chalk.bgGreen("tabgroup folder created"))
 
-async function addRoute(route?: number) {
+async function addRoute(route: number,) {
     await inquirer.prompt({
         type: "input",
         name: "add_route",
-        message: "Add a new route name by typing the name in: "
+        message: `Add a new route name by typing the name in (${route + 1}. tabgroup): `
     }).then(async (data) => {
         // add a new route to the content tab group
+
     })
 }
 
@@ -86,7 +106,10 @@ await inquirer.prompt({
             type: "input",
             name: "route",
             message: "What should the name of the content route be?"
+        }).then(async (data) => {
+            
         })
+        return
     }
     await inquirer.prompt({
         type: "number",
@@ -102,17 +125,10 @@ await inquirer.prompt({
         }
         const { route_quantity } = parseSchema.data
         console.log(data)
+        
         for (let i = 0; i < route_quantity.toString().length; i++) {
-            await addRoute()
+            await addRoute(i)
         }
     })
 })
 
-
-
-
-setTimeout(() => {
-    spinner.color = 'yellow';
-    spinner.text = 'Loading rainbows';
-    spinner.stop()
-}, 1000);
