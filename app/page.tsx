@@ -8,9 +8,9 @@ export default function Home() {
           Add content to<br />your next-app
         </h1>
         <p>
-          npx next-content
+          npx next-content@latest
         </p>
-        <Img className="rounded-[20px] border-4 border-[#ffffff1f] ring-[1px] ring-white " src={Screenshot} width={500} height={500} alt="a screenshot" />
+        <Img className="rounded-[20px] border-4 border-[#ffffff1f] ring-[1px] ring-[#ffffff5e] " src={Screenshot} width={1000} height={1000} alt="a screenshot" />
       </section>
     </div>
   )
