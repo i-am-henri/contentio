@@ -8,7 +8,7 @@ import path from "path";
 import { execSync } from "child_process";
 import { z } from "zod";
 
-/**the version of the CLI, please update this*/
+/**the version of the CLI, please update this on a new version*/
 const version = "0.0.1";
 
 console.log(`${chalk.bgWhite(`next-docs, version ${version}`)} \n`);
@@ -65,7 +65,9 @@ async function addRoute(route?: number) {
     await inquirer.prompt({
         type: "input",
         name: "add_route",
-        message: "Add a new route name by typing the name in."
+        message: "Add a new route name by typing the name in: "
+    }).then(async (data) => {
+        // add a new route to the content tab group
     })
 }
 
@@ -76,9 +78,9 @@ await inquirer.prompt({
         "no"
     ],
     message: "Do you want to add more routes than 1?",
-    name: "more_tham_one_route"
+    name: "more_than_one_route"
 }).then(async (data) => {
-    if (data.more_tham_one_route == "no") {
+    if (data.more_than_one_route == "no") {
         // asking for a single content route
         await inquirer.prompt({
             type: "input",
