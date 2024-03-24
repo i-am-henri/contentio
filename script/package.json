@@ -1,12 +1,19 @@
 {
-  "name": "next-docs",
+  "name": "next-content",
   "version": "0.0.1",
   "description": "This is a CLI to add content in form of mdx fast to your next application.",
-  "main": "index.js",
+  "main": "./build/index.js",
   "type": "module",
   "module": "esnext",
+  "bin": {
+    "menimal": "./build/bin.js"
+  },
+  "files": [
+    "build"
+  ],
   "scripts": {
-    "dev": "tsc --module esnext && node ./build/index.js"
+    "dev": "tsc --module esnext && node ./build/index.js",
+    "bundle": "tsup"
   },
   "keywords": [
     "next docs",
@@ -20,16 +27,19 @@
     "next mdx",
     "next documentation"
   ],
-  "author": "henrii",
+  "author": "henriii",
   "license": "ISC",
   "dependencies": {
-    "@types/inquirer": "^9.0.7",
     "chalk": "^5.3.0",
     "inquirer": "^9.2.16",
-    "ora": "^8.0.1",
     "terminal-link": "^3.0.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.3",
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.11.30",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
   }
 }

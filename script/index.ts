@@ -3,7 +3,6 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
 import fs, { writeFileSync } from "fs";
-import ora from "ora"
 import path, { dirname } from "path";
 import { execSync } from "child_process";
 import { z } from "zod";
