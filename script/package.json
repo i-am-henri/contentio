@@ -29,6 +29,7 @@
     "ora": "^8.0.1",
     "terminal-link": "^3.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "zod": "^3.22.4"
   }
 }
