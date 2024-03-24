@@ -4,9 +4,10 @@ import inquirer from "inquirer";
 import terminalLink from "terminal-link";
 import fs from "fs";
 import ora from "ora"
-import path from "path";
+import path, { dirname } from "path";
 import { execSync } from "child_process";
 import { z } from "zod";
+import { fileURLToPath } from "url";
 
 /**the version of the CLI, please update this on a new version*/
 const version = "0.0.1";
@@ -98,6 +99,8 @@ async function addRoute(route: number,) {
         name: "add_route",
         message: `Add a new route name by typing the name in (${route + 1}. tabgroup): `
     }).then(async (data) => {
+        // replace the build directory for the development
+        const __dirname = dirname(fileURLToPath(import.meta.url).replace("/build", ""));
         // add a new route to the content tab group
         if (!fs.existsSync("./app/(content)/" + data.add_route)) {
             fs.mkdirSync("./app/(content)/" + data.add_route);
@@ -126,7 +129,7 @@ async function addRoute(route: number,) {
         `, (err) => {
             // handle an error
         })
-        fs.writeFile(`./app/(cotent)/${data.add_route}/[...slug]/page.tsx`, `
+        fs.writeFile(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]/page.tsx`), `
         // file added by next-docs
         import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
         import { getMarkdown } from './${data.add_route}'
