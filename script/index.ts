@@ -111,6 +111,7 @@ async function addRoute(route: number,) {
 
         
         try {
+            // The first file, the code to load all of the markdown content
             fs.writeFileSync(`${__dirname}/app/(cotent)/${data.add_route}/[...slug]/${data.add_route}.ts`, `
             // file added by next-docs
             import { compileMDX } from "next-mdx-remote/rsc";
@@ -131,6 +132,7 @@ async function addRoute(route: number,) {
             }
             `)
             console.log(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]`))
+            // The second file to show the markdown files in the app
             fs.writeFileSync(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]/page.tsx`), `
             // file added by next-docs
             import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
