@@ -2,7 +2,7 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
-import fs from "fs";
+import fs, { writeFileSync } from "fs";
 import ora from "ora"
 import path, { dirname } from "path";
 import { execSync } from "child_process";
@@ -107,58 +107,61 @@ async function addRoute(route: number,) {
         }
         fs.mkdirSync("./app/(content)/" + data.add_route + "/[...slug]");
         const route_path = path.join("./app/(content)/" + data.add_route)
+        const filePath = `${__dirname}/app/(content)/${data.add_route}/[...slug]/page.tsx`;
 
-        fs.writeFile(`./app/(cotent)/${data.add_route}/[...slug]/${data.add_route}.ts`, `
-        // file added by next-docs
-        import { compileMDX } from "next-mdx-remote/rsc";
-        import { notFound } from "next/navigation";
-        import fs from "node:fs"
-        export async function getMarkdown(slug: string): Promise<string> {
-          let raw: string = ""
-          await fs.promises.readFile("content/blog/" + slug + ".mdx", 'utf-8').then((data) => {
-            raw = data;
-          }).catch((err) => {
-            console.log(err.code)
-            if (err.code == "ENOENT") notFound()
-          })
-          if (raw == "") {
-            notFound()
-          }
-          return raw
-        }
-        `, (err) => {
+        
+        try {
+            fs.writeFileSync(`${__dirname}/app/(cotent)/${data.add_route}/[...slug]/${data.add_route}.ts`, `
+            // file added by next-docs
+            import { compileMDX } from "next-mdx-remote/rsc";
+            import { notFound } from "next/navigation";
+            import fs from "node:fs"
+            export async function getMarkdown(slug: string): Promise<string> {
+              let raw: string = ""
+              await fs.promises.readFile("content/blog/" + slug + ".mdx", 'utf-8').then((data) => {
+                raw = data;
+              }).catch((err) => {
+                console.log(err.code)
+                if (err.code == "ENOENT") notFound()
+              })
+              if (raw == "") {
+                notFound()
+              }
+              return raw
+            }
+            `)
+            console.log(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]`))
+            fs.writeFileSync(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]/page.tsx`), `
+            // file added by next-docs
+            import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
+            import { getMarkdown } from './${data.add_route}'
+            import { Metadata } from 'next'
+
+            export async function generateMetadata({
+              params,
+            }: { params: { slug: string } }): Promise<Metadata | undefined> {
+              const raw = await getMarkdown(params.slug[0])
+              const { content, frontmatter } = await compileMDX<{ title: string, date: string, description: string, }>({
+                source: raw,
+                options: { parseFrontmatter: true },
+              })
+              return {
+                title: frontmatter.title,
+                description: frontmatter.description,
+              }
+            }
+
+            export default async function Page({
+              params
+            }: { params: { slug: string } }) {
+              const raw = await getMarkdown(params.slug[0])
+              const withoutFrontmatter: string = raw.replace(/---[\s\S]*?---/, '');
+              return <MDXRemote source={withoutFrontmatter} />
+            }
+            `)
+        } catch (e) {
             // handle an error
-        })
-        fs.writeFile(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]/page.tsx`), `
-        // file added by next-docs
-        import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
-        import { getMarkdown } from './${data.add_route}'
-        import { Metadata } from 'next'
-
-        export async function generateMetadata({
-          params,
-        }: { params: { slug: string } }): Promise<Metadata | undefined> {
-          const raw = await getMarkdown(params.slug[0])
-          const { content, frontmatter } = await compileMDX<{ title: string, date: string, description: string, }>({
-            source: raw,
-            options: { parseFrontmatter: true },
-          })
-          return {
-            title: frontmatter.title,
-            description: frontmatter.description,
-          }
         }
-
-        export default async function Page({
-          params
-        }: { params: { slug: string } }) {
-          const raw = await getMarkdown(params.slug[0])
-          const withoutFrontmatter: string = raw.replace(/---[\s\S]*?---/, '');
-          return <MDXRemote source={withoutFrontmatter} />
-        }
-        `, (err) => {
-            // handle an error
-        })
     })
 }
 
