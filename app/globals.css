@@ -9,3 +9,7 @@
   --primary: #39765D;
   --accent: #88C6AD;
 }
+
+body {
+  background-color: var(--background);
+}
