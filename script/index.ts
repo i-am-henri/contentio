@@ -6,6 +6,7 @@ import fs from "fs";
 import ora from 'ora';
 import path from "path";
 import { execSync } from "child_process";
+import { z } from "zod";
 
 /**the version of the CLI, please update this*/
 const version = "0.0.1";
@@ -60,12 +61,53 @@ if (!fs.existsSync("./app/(content)")) {
 // all done, stopping the spinner
 spinner.stop()
 
-// asking which content routes the user wants
+async function addRoute(route?: number) {
+    await inquirer.prompt({
+        type: "input",
+        name: "add_route",
+        message: "Add a new route name by typing the name in."
+    })
+}
+
 await inquirer.prompt({
-    type: "input",
-    name: "route",
-    message: "What should the name of the content route be?"
+    type: "list",
+    choices: [
+        "yes",
+        "no"
+    ],
+    message: "Do you want to add more routes than 1?",
+    name: "more_tham_one_route"
+}).then(async (data) => {
+    if (data.more_tham_one_route == "no") {
+        // asking for a single content route
+        await inquirer.prompt({
+            type: "input",
+            name: "route",
+            message: "What should the name of the content route be?"
+        })
+    }
+    await inquirer.prompt({
+        type: "number",
+        message: "How much routes do you want to add?",
+        name: "route_quantity"
+    }).then(async (data) => {
+        const parseSchema = z.object({
+            route_quantity: z.number()
+        }).safeParse(data)
+        if (!parseSchema.success) {
+            console.log(chalk.bgRed("We had an error: we wasn't able to parse the provided number."))
+            process.exit(0)
+        }
+        const { route_quantity } = parseSchema.data
+        console.log(data)
+        for (let i = 0; i < route_quantity.toString().length; i++) {
+            await addRoute()
+        }
+    })
 })
+
+
+
 
 setTimeout(() => {
     spinner.color = 'yellow';
