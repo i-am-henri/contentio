@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 /**the version of the CLI, please update this on a new version*/
 const version = "0.0.1";
 
-console.log(`${chalk.bgWhite(`next-docs, version ${version}`)} \n`);
+console.log(`${chalk.bold(`next-docs, version ${version}`)} \n`);
 
 // checks if you on the root of your project
 await inquirer.prompt({
@@ -42,12 +42,21 @@ await inquirer.prompt({
 
     fs.access(filePath, fs.constants.F_OK, (err) => {
         if (err) {
-            console.log(chalk.bgRed("We can't find a package.json file, please check if you are on the root of your project."))
+            console.log(chalk.bgRed("\nWe can't find a package.json file, please check if you are on the root of your project."))
             process.exit(1)
         }
         // the file exists
     });
+    fs.access("./app", fs.constants.F_OK, (err) => {
+        if (err) {
+            console.log(chalk.bgRed("\nWe can't find the app directory, please check if you are on the root of your project."))
+            process.exit(1)
+        }
+        // the app folder exists
+    });
 })
+
+// checks which language you are using. If Js: an error will occure
 await inquirer.prompt({
     type: "confirm",
     name: "language",
@@ -60,6 +69,8 @@ await inquirer.prompt({
         process.exit(1)
     }
 })
+
+// asking which name the content folder should have. 
 await inquirer.prompt({
     type: "list",
     name: "content_folder",
@@ -75,13 +86,14 @@ await inquirer.prompt({
             if (!fs.existsSync(`./${data.content_folder_name}`)) {
                 fs.mkdirSync(`./${data.content_folder_name}`);
             }
-            console.log(chalk.bgGreen("Folder created"))
+            console.log(chalk.green("Folder created"))
         })
+        return
     }
     if (!fs.existsSync(`./${data.content_folder}`)) {
         fs.mkdirSync(`./${data.content_folder}`);
     }
-    console.log(chalk.bgGreen("Folder created"))
+    console.log(chalk.green("Folder created"))
 })
 
 // path to the app directory
@@ -91,7 +103,7 @@ const app_path = path.join("./app")
 if (!fs.existsSync("./app/(content)")) {
     fs.mkdirSync("./app/(content)");
 }
-console.log(chalk.bgGreen("tabgroup folder created"))
+console.log(chalk.green("tabgroup folder created"))
 
 async function addRoute(route: number,) {
     await inquirer.prompt({
@@ -112,57 +124,56 @@ async function addRoute(route: number,) {
         
         try {
             // The first file, the code to load all of the markdown content
-            fs.writeFileSync(`${__dirname}/app/(cotent)/${data.add_route}/[...slug]/${data.add_route}.ts`, `
-            // file added by next-docs
-            import { compileMDX } from "next-mdx-remote/rsc";
-            import { notFound } from "next/navigation";
-            import fs from "node:fs"
-            export async function getMarkdown(slug: string): Promise<string> {
-              let raw: string = ""
-              await fs.promises.readFile("content/blog/" + slug + ".mdx", 'utf-8').then((data) => {
-                raw = data;
-              }).catch((err) => {
-                console.log(err.code)
-                if (err.code == "ENOENT") notFound()
-              })
-              if (raw == "") {
-                notFound()
-              }
-              return raw
-            }
+            fs.writeFileSync(`${__dirname}/app/(content)/${data.add_route}/[...slug]/${data.add_route}.ts`, `// file added by next-docs
+import { compileMDX } from "next-mdx-remote/rsc";
+import { notFound } from "next/navigation";
+import fs from "node:fs"
+export async function getMarkdown(slug: string): Promise<string> {
+    let raw: string = ""
+    await fs.promises.readFile("content/${data.add_route}/" + slug + ".mdx", 'utf-8').then((data) => {
+        raw = data;
+    }).catch((err) => {
+        console.log(err.code)
+        if (err.code == "ENOENT") notFound()
+    })
+    if (raw == "") {
+        notFound()
+    }
+    return raw
+}
             `)
-            console.log(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]`))
             // The second file to show the markdown files in the app
-            fs.writeFileSync(path.join(__dirname + `/app/(cotent)/${data.add_route}/[...slug]/page.tsx`), `
-            // file added by next-docs
-            import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
-            import { getMarkdown } from './${data.add_route}'
-            import { Metadata } from 'next'
+            fs.writeFileSync(path.join(__dirname + `/app/(content)/${data.add_route}/[...slug]/page.tsx`), `// file added by next-docs
+import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
+import { getMarkdown } from './${data.add_route}'
+import { Metadata } from 'next'
 
-            export async function generateMetadata({
-              params,
-            }: { params: { slug: string } }): Promise<Metadata | undefined> {
-              const raw = await getMarkdown(params.slug[0])
-              const { content, frontmatter } = await compileMDX<{ title: string, date: string, description: string, }>({
-                source: raw,
-                options: { parseFrontmatter: true },
-              })
-              return {
-                title: frontmatter.title,
-                description: frontmatter.description,
-              }
-            }
+export async function generateMetadata({
+  params,
+}: { params: { slug: string } }): Promise<Metadata | undefined> {
+    const raw = await getMarkdown(params.slug[0])
+    // please insert here your frontmatter data, which you expect
+    const { content, frontmatter } = await compileMDX<{ title: string, date: string, description: string, }>({
+        source: raw,
+        options: { parseFrontmatter: true },
+    })
+    return {
+        title: frontmatter.title,
+        description: frontmatter.description,
+    }
+}
 
-            export default async function Page({
-              params
-            }: { params: { slug: string } }) {
-              const raw = await getMarkdown(params.slug[0])
-              const withoutFrontmatter: string = raw.replace(/---[\s\S]*?---/, '');
-              return <MDXRemote source={withoutFrontmatter} />
-            }
+export default async function Page({
+  params
+}: { params: { slug: string } }) {
+    const raw = await getMarkdown(params.slug[0])
+    const withoutFrontmatter: string = raw.replace(/---[\s\S]*?---/, '');
+    return <MDXRemote source={withoutFrontmatter} />
+}
             `)
-        } catch (e) {
+        } catch (e: any) {
             // handle an error
+            throw new Error(e)
         }
     })
 }
@@ -196,7 +207,7 @@ await inquirer.prompt({
             route_quantity: z.number()
         }).safeParse(data)
         if (!parseSchema.success) {
-            console.log(chalk.bgRed("We had an error: we wasn't able to parse the provided number."))
+            console.log(chalk.bgRed("We had an error: we weren't able to parse the provided number."))
             process.exit(0)
         }
         const { route_quantity } = parseSchema.data
@@ -205,6 +216,10 @@ await inquirer.prompt({
         for (let i = 0; i < route_quantity.toString().length; i++) {
             await addRoute(i)
         }
+        console.log(`
+${chalk.green("All files were created succesfuly. Happy hacking!")}
+${chalk.bold(`Want to ${terminalLink("contribute", "https://github.com/i-am-henri/next-content")}?`)}
+        `)
     })
 })
 
