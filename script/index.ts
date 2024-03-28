@@ -179,6 +179,8 @@ await inquirer.prompt({
 
 // end "scene"
 console.log(chalk.green("All files and next-mdx-remote were succesfully added. Happy hacking!"))
+// TODO: remove this line when adding support for the installation in this cli
+console.log(chalk.green("Please install now the package 'next-mdx-remote'."))
 // Terminallink isn't supported, using fallback text instead
 if (!terminalLink.isSupported) {
     console.log("If you like this project, please consider helping on github: https://github.com/i-am-henri/next-content")
