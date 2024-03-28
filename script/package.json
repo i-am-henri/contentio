@@ -1,6 +1,6 @@
 {
   "name": "next-content",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "This is a CLI to add content in form of mdx fast to your next application.",
   "main": "./build/index.js",
   "type": "module",

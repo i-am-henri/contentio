@@ -13,7 +13,7 @@ import { generateScriptTemplate } from "./templates/script";
 import { generatePageTemplate } from "./templates/page";
 
 /**The version of the CLI, please update this on a new version!*/
-const version = "0.0.1";
+const version = "0.1.0";
 
 // prints the version, and the name of this cli in the console, in a bold style
 console.log(`${chalk.bold(`next-docs, version ${version}`)} \n`);
