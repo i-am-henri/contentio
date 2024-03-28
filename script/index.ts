@@ -1,23 +1,28 @@
 #!/usr/bin/env node
+
+/*
+    Welcome to the source code. Please describe your code well and if your done please create a pull request. Thanks!
+*/
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
 import fs, { writeFileSync } from "fs";
-import path, { dirname } from "path";
-import { execSync } from "child_process";
-import { z } from "zod";
-import { fileURLToPath } from "url";
+import { exec, execSync } from "child_process";
+import { generateScriptTemplate } from "./templates/script";
+import { generatePageTemplate } from "./templates/page";
 
-/**the version of the CLI, please update this on a new version*/
+/**The version of the CLI, please update this on a new version!*/
 const version = "0.0.1";
 
+// prints the version, and the name of this cli in the console, in a bold style
 console.log(`${chalk.bold(`next-docs, version ${version}`)} \n`);
 
 // checks if you on the root of your project
 await inquirer.prompt({
     name: "root",
     type: "confirm",
-    message: "Are you on the root of your project? (do you see a package.json file):",
+    message: "Are you on the root of your project? (do you see a package.json or similar file?):",
 }).then((data) => {
     if (data.root == false) {
         console.log(chalk.bgRed("\n\nYou have to be on the root of your next project. Try to navigate to the root."))
@@ -34,37 +39,39 @@ await inquirer.prompt({
     if (data.app_directory == false) {
         console.log(chalk.bgRed("\n\nSorry, but we aren't supporting the pages direcory yet."))
         console.log(`You can help us by creating a supported version of this cli ${terminalLink("here", "https://github.com/i-am-henri/next-docs")}.`)
-        console.log('(https://github.com/i-am-henri/next-docs)')
         process.exit(1)
     }
-    const filePath = path.join("./package.json");
-
-    fs.access(filePath, fs.constants.F_OK, (err) => {
-        if (err) {
-            console.log(chalk.bgRed("\nWe can't find a package.json file, please check if you are on the root of your project."))
-            process.exit(1)
-        }
-        // the file exists
-    });
-    fs.access("./app", fs.constants.F_OK, (err) => {
-        if (err) {
-            console.log(chalk.bgRed("\nWe can't find the app directory, please check if you are on the root of your project."))
-            process.exit(1)
-        }
-        // the app folder exists
-    });
 })
+// checking if a package.json exists, if not you aren't on the root
+fs.access("./package.json", fs.constants.F_OK, (err) => {
+    if (err) {
+        console.log(chalk.bgRed("\nWe can't find a package.json file, please check if you are on the root of your project."))
+        process.exit(1)
+    }
+    // the file exists
+});
+// checking if the app dir exists
+fs.access("./app", fs.constants.F_OK, (err) => {
+    if (err) {
+        console.log(chalk.bgRed("\nWe can't find the app directory, please check if you are on the root of your project."))
+        process.exit(1)
+    }
+    // the app folder exists
+});
 
-// checks which language you are using. If Js: an error will occure
+// checks which language you are using. If Js: an error will occure, templates are not ready yet
 await inquirer.prompt({
     type: "confirm",
     name: "language",
     message: "Are you using Typescipt?"
 }).then(async (data) => {
     if (data.language == false) {
-        console.log(chalk.bgRed("We aren't supporting Javascript yet."))
+        console.log(chalk.bgRed("[system] we aren't supporting Javascript yet."))
+        if (!terminalLink.isSupported) {
+            console.log(`You can help us by creating a supported version of this CLI on github: https://github.com/i-am-henri/next-docs.`)
+            process.exit(1)
+        }
         console.log(`You can help us by creating a supported version of this cli ${terminalLink("here", "https://github.com/i-am-henri/next-docs")}.`)
-        console.log('(https://github.com/i-am-henri/next-docs)')
         process.exit(1)
     }
 })
@@ -85,98 +92,59 @@ await inquirer.prompt({
             if (!fs.existsSync(`./${data.content_folder_name}`)) {
                 fs.mkdirSync(`./${data.content_folder_name}`);
             }
-            console.log(chalk.green("Folder created"))
         })
         return
     }
     if (!fs.existsSync(`./${data.content_folder}`)) {
         fs.mkdirSync(`./${data.content_folder}`);
     }
-    console.log(chalk.green("Folder created"))
+    console.log(chalk.green("[system] folder created"))
 })
-
-// path to the app directory
-const app_path = path.join("./app")
 
 // checks if the folder already exists
 if (!fs.existsSync("./app/(content)")) {
     fs.mkdirSync("./app/(content)");
+    console.log(chalk.green("[system] tabgroup-folder 'content' created"))
+} else {
+    console.log(chalk.green("[system] tabgroup-folder existing"))
 }
-console.log(chalk.green("tabgroup folder created"))
 
-async function addRoute(route: number,) {
+/**
+ * Generate the folders and add the scripts.
+ * Please provide the name for the scripts.
+ * @param name string
+ */
+async function createFiles(name: string) {
+    // generate the folders
+    fs.mkdirSync("./app/(content)/" + name + "/[...slug]", {
+        recursive: true
+    })
+    const pagePath = process.cwd() + "/app/(content)/" + name + "/[...slug]/page.tsx"
+    const scriptPath = process.cwd() + "/app/(content)/" + name + "/[...slug]/" + name + ".ts"
+
+    // generate the script file
+    fs.writeFile(scriptPath, generateScriptTemplate(name), (err) => {
+        if (err) console.log(err)
+    })
+    // generate the page file
+    fs.writeFile(pagePath, generatePageTemplate(name), (err) => {
+        if (err) console.log(err)
+    })
+}
+
+/**
+ * Asking for the name of the route folder.
+ * @param route number
+ */
+async function addRoutes(route: number,) {
     await inquirer.prompt({
         type: "input",
         name: "add_route",
         message: `Add a new route name by typing the name in (${route + 1}. tabgroup): `
-    }).then(async (data) => {
-        // replace the build directory for the development
-        const __dirname = dirname(fileURLToPath(import.meta.url).replace("/build", ""));
-        // add a new route to the content tab group
-        if (!fs.existsSync("./app/(content)/" + data.add_route)) {
-            fs.mkdirSync("./app/(content)/" + data.add_route);
-        }
-        fs.mkdirSync("./app/(content)/" + data.add_route + "/[...slug]");
-        const route_path = path.join("./app/(content)/" + data.add_route)
-        const filePath = `${__dirname}/app/(content)/${data.add_route}/[...slug]/page.tsx`;
-
-        
-        try {
-            // The first file, the code to load all of the markdown content
-            fs.writeFileSync(`${__dirname}/app/(content)/${data.add_route}/[...slug]/${data.add_route}.ts`, `// file added by next-docs
-import { compileMDX } from "next-mdx-remote/rsc";
-import { notFound } from "next/navigation";
-import fs from "node:fs"
-export async function getMarkdown(slug: string): Promise<string> {
-    let raw: string = ""
-    await fs.promises.readFile("content/${data.add_route}/" + slug + ".mdx", 'utf-8').then((data) => {
-        raw = data;
-    }).catch((err) => {
-        console.log(err.code)
-        if (err.code == "ENOENT") notFound()
-    })
-    if (raw == "") {
-        notFound()
-    }
-    return raw
-}
-            `)
-            // The second file to show the markdown files in the app
-            fs.writeFileSync(path.join(__dirname + `/app/(content)/${data.add_route}/[...slug]/page.tsx`), `// file added by next-docs
-import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
-import { getMarkdown } from './${data.add_route}'
-import { Metadata } from 'next'
-
-export async function generateMetadata({
-  params,
-}: { params: { slug: string } }): Promise<Metadata | undefined> {
-    const raw = await getMarkdown(params.slug[0])
-    // please insert here your frontmatter data, which you expect
-    const { content, frontmatter } = await compileMDX<{ title: string, date: string, description: string, }>({
-        source: raw,
-        options: { parseFrontmatter: true },
-    })
-    return {
-        title: frontmatter.title,
-        description: frontmatter.description,
-    }
+    }).then(async (data) => createFiles(data.add_route))
 }
 
-export default async function Page({
-  params
-}: { params: { slug: string } }) {
-    const raw = await getMarkdown(params.slug[0])
-    const withoutFrontmatter: string = raw.replace(/---[\s\S]*?---/, '');
-    return <MDXRemote source={withoutFrontmatter} />
-}
-            `)
-        } catch (e: any) {
-            // handle an error
-            throw new Error(e)
-        }
-    })
-}
-
+// asking if you want to add more routes than only 1
 await inquirer.prompt({
     type: "list",
     choices: [
@@ -192,33 +160,28 @@ await inquirer.prompt({
             type: "input",
             name: "route",
             message: "What should the name of the content route be?"
-        }).then(async (data) => {
-
-        })
+        }).then(async (data: {
+            route: string
+        }) => createFiles(data.route))
         return
     }
+    // adding more than one route
     await inquirer.prompt({
         type: "number",
         message: "How much routes do you want to add?",
         name: "route_quantity"
-    }).then(async (data) => {
-        const parseSchema = z.object({
-            route_quantity: z.number()
-        }).safeParse(data)
-        if (!parseSchema.success) {
-            console.log(chalk.bgRed("We had an error: we weren't able to parse the provided number."))
-            process.exit(0)
-        }
-        const { route_quantity } = parseSchema.data
-        console.log(data)
-
-        for (let i = 0; i < route_quantity.toString().length; i++) {
-            await addRoute(i)
-        }
-        console.log(`
-${chalk.green("All files were created succesfuly. Happy hacking!")}
-${chalk.bold(`Want to ${terminalLink("contribute", "https://github.com/i-am-henri/next-content")}?`)}
-        `)
-    })
+    }).then(async (data: {
+        route_quantity: number
+    }) => addRoutes(data.route_quantity))
 })
+// TODO: installing the next-mdx-remote package
 
+
+// end "scene"
+console.log(chalk.green("All files and next-mdx-remote were succesfully added. Happy hacking!"))
+// Terminallink isn't supported, using fallback text instead
+if (!terminalLink.isSupported) {
+    console.log("If you like this project, please consider helping on github: https://github.com/i-am-henri/next-content")
+    process.exit(0)
+}
+console.log(`If you like this project, please consider helping ${terminalLink("here", "https://github.com/i-am-henri/next-content")}.`)
