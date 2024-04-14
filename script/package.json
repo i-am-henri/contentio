@@ -1,16 +1,11 @@
 {
-  "name": "next-content",
-  "version": "0.1.0",
+  "name": "add-next-content",
+  "version": "0.1.2",
   "description": "This is a CLI to add content in form of mdx fast to your next application.",
   "main": "./build/index.js",
   "type": "module",
   "module": "esnext",
-  "bin": {
-    "menimal": "./build/bin.js"
-  },
-  "files": [
-    "build"
-  ],
+  "bin": "./build/index.js",
   "scripts": {
     "dev": "tsc --module esnext && node ./build/index.js",
     "bundle": "tsup"
