@@ -3,7 +3,7 @@
     
     "moduleResolution": "node",
     "module": "esnext",
-    "target": "es2017",
+    "target": "ES2022",
     "outDir": "./build",
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

@@ -3,15 +3,21 @@
 /*
     Welcome to the source code. Please describe your code well and if your done please create a pull request. Thanks!
 */
-
+import {program} from "commander"
 import chalk from "chalk";
 import inquirer from "inquirer";
 import terminalLink from "terminal-link";
 import fs, { writeFileSync } from "fs";
 import { exec, execSync } from "child_process";
-import { generateScriptTemplate } from "./templates/script";
-import { generatePageTemplate } from "./templates/page";
+import { generateScriptTemplate } from "./templates/script.js";
+import { generatePageTemplate } from "./templates/page.js";
+// @ifdef DEBUG
+console.log('Debugging is enabled.');
+// @endif
 
+// @ifdef PRODUCTION
+console.log('This code runs in production.');
+// @endif
 /**The version of the CLI, please update this on a new version!*/
 const version = "0.1.1";
 
