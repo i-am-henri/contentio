@@ -9,6 +9,7 @@ import terminalLink from "terminal-link";
 import Folder from "../../functions/src-folder.js";
 import { generateScriptTemplate } from "../../templates/script.js";
 import { generatePageTemplate } from "../../templates/page.js";
+import { generateConfigTemplate } from "../../templates/config.js";
 /*
     Init a new project with contentio. This is the init command.
     This command creates a contentio.json file on the root of your project. 
@@ -82,8 +83,13 @@ export default async function init() {
     spinner.text = "writing the content to the files..."
     writeFileSync(scriptPath, generateScriptTemplate(response.route))
     writeFileSync(pagePath, generatePageTemplate(response.route))
-
+    writeFileSync("./contentio.json", generateConfigTemplate(response.route))
+    
     spinner.stop()
+
+    spinner.text = "creating the config file"
+
+
     console.log(chalk.green("all done"))
 
 }
