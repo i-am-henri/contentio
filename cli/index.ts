@@ -11,13 +11,22 @@ import fs, { writeFileSync } from "fs";
 import { exec, execSync } from "child_process";
 import { generateScriptTemplate } from "./templates/script.js";
 import { generatePageTemplate } from "./templates/page.js";
-// @ifdef DEBUG
-console.log('Debugging is enabled.');
-// @endif
+import init from "./actions/init/index.js";
 
-// @ifdef PRODUCTION
-console.log('This code runs in production.');
-// @endif
+program
+  .name('contentio')
+  .description('CLI to add content to any nextjs application')
+  .version('0.8.0');
+
+program.command('init')
+  .description('Init a first route, add the folder for your content and create a "(content)" tabgroup.')
+  .action(async (str, options) => {
+    await init()
+    console.log("init")
+  });
+
+program.parse();
+
 /**The version of the CLI, please update this on a new version!*/
 const version = "0.1.1";
 
@@ -159,7 +168,7 @@ await inquirer.prompt({
     ],
     message: "Do you want to add more routes than 1?",
     name: "more_than_one_route"
-}).then(async (data) => {
+}, ).then(async (data) => {
     if (data.more_than_one_route == "no") {
         // asking for a single content route
         await inquirer.prompt({
