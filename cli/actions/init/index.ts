@@ -104,8 +104,6 @@ Init a new Contentio project with the cli.
     }))
     // stop the loading spinner, all files are created now
     spinner.stop()
-
-
-
+    
     console.log(chalk.green("all done => want to help? https://git.new/contentio"))
 }
