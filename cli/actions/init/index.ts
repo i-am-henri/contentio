@@ -4,8 +4,6 @@
 */
 import chalk from "chalk";
 import { existsSync, mkdirSync, writeFile, writeFileSync } from "fs";
-import inquirer from "inquirer";
-import figlet from "figlet"
 import ora from "ora"
 import prompts from "prompts"
 import { terminalLinkSupported } from "../../functions/link.js";
