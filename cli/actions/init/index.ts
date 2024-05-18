@@ -1,3 +1,7 @@
+/*
+    Contentio 2024
+    Init a new project with Contentio.
+*/
 import chalk from "chalk";
 import { existsSync, mkdirSync, writeFile, writeFileSync } from "fs";
 import inquirer from "inquirer";
@@ -10,12 +14,17 @@ import Folder from "../../functions/src-folder.js";
 import { generateScriptTemplate } from "../../templates/script.js";
 import { generatePageTemplate } from "../../templates/page.js";
 import { generateConfigTemplate } from "../../templates/config.js";
+import { error } from "../../functions/error.js";
 /*
     Init a new project with contentio. This is the init command.
     This command creates a contentio.json file on the root of your project. 
     Then all of the config will be used for the next content-route.
 */
 export default async function init() {
+    error({
+        code: 300,
+        message: "weil baum"
+    })
     // warn the user to use a supported version of nextjs
     console.warn(chalk.yellow("[i] You must use NextJs version 13 or higher! Route-groups are not supported in lower versions."))
 
@@ -40,7 +49,7 @@ export default async function init() {
 
     // checking if you're using typescript
     if (!existsSync("./tsconfig.json")) {
-        console.log(chalk.red("[i] At the time, we are not supporting Javascript, please use Typescript instead. If you want, you can help us, creating a supported version of this cli on github " + terminalLinkSupported ? terminalLink("here", "https://github.com/i-am-henri/contentio") : "(https://github.com/i-am-henri/contentio)" + "."))
+        console.log(chalk.red("[i] At the time, we are not supporting Javascript, please use Typescript instead. If you want, you can help us, creating a supported version of this cli on github " + terminalLinkSupported ? terminalLink("here", "https://git.new/contentio") : "(https://git.new/contentio)" + "."))
         process.exit(1)
     }
 
@@ -68,12 +77,16 @@ export default async function init() {
 
     // creating the route-groupe folder
     const folder = Folder() === "app" ? "app" : "src/app";
+
     const route = response.route;
     const path = folder === "app"
         ? `./app/(content)/${route}/[slug]`
         : `./src/app/(content)/${route}/[slug]`;
     const scriptPath = path + `/${route}.ts`
     const pagePath = path + `/page.tsx`
+    const configPath = `./config.json`
+
+    // create the folder with all parent folders
     mkdirSync(path, { recursive: true });
 
     // creating the folder for the content
@@ -83,12 +96,11 @@ export default async function init() {
     spinner.text = "writing the content to the files..."
     writeFileSync(scriptPath, generateScriptTemplate(response.route))
     writeFileSync(pagePath, generatePageTemplate(response.route))
-    writeFileSync("./contentio.json", generateConfigTemplate(response.route))
+    writeFileSync(configPath, generateConfigTemplate(response.route))
     // stop the loading spinner, all files are created now
     spinner.stop()
 
 
 
-    console.log(chalk.green("all done"))
-
+    console.log(chalk.green("all done => want to help? https://git.new/contentio"))
 }
