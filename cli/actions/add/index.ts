@@ -8,7 +8,7 @@ import { error } from "../../functions/error.js";
 import prompts from "prompts";
 import getConfig from "../../functions/get-config.js";
 import { config } from "../../types/config.js";
-import fs, { mkdirSync, writeFileSync } from "node:fs"
+import fs, { mkdirSync, writeFile, writeFileSync } from "node:fs"
 import Folder from "../../functions/src-folder.js";
 import { generateScriptTemplate } from "../../templates/script.js";
 import { generatePageTemplate } from "../../templates/page.js";
@@ -40,13 +40,34 @@ async function addRoute(name: string) {
     mkdirSync("./content", { recursive: true })
 
     // adding content to the 2 folders.
-    writeFileSync(scriptPath, generateScriptTemplate(name))
-    writeFileSync(pagePath, generatePageTemplate(name))
-    writeFileSync(configPath, generateConfigTemplate({
+    writeFile(scriptPath, generateScriptTemplate(name), (err) => {
+        if (err) error({
+            message: err.message
+        })
+    })
+    writeFile(pagePath, generatePageTemplate(name), (err) => {
+        if (err) error({
+            message: err.message
+        })
+    })
+    writeFile(configPath, generateConfigTemplate({
         route: route,
         contentDir: "content",
         useContentTabGroup: true
-    }))
+    }), (err) => {
+        if (err) error({
+            message: err.message
+        })
+    })
+
+    conf.routes.push({
+        name
+    })
+    writeFile(pagePath, JSON.stringify(conf), (err) => {
+        if (err) error({
+            message: err.message
+        })
+    })
 }
 
 export default async function add(arg?: string) {
