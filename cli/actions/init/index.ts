@@ -84,10 +84,9 @@ export default async function init() {
     writeFileSync(scriptPath, generateScriptTemplate(response.route))
     writeFileSync(pagePath, generatePageTemplate(response.route))
     writeFileSync("./contentio.json", generateConfigTemplate(response.route))
-    
+    // stop the loading spinner, all files are created now
     spinner.stop()
 
-    spinner.text = "creating the config file"
 
 
     console.log(chalk.green("all done"))
