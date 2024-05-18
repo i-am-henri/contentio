@@ -85,7 +85,7 @@ Init a new Contentio project with the cli.
         : `./src/app/(content)/${route}/[slug]`;
     const scriptPath = path + `/${route}.ts`
     const pagePath = path + `/page.tsx`
-    const configPath = `./config.json`
+    const configPath = `./config.contentio.json`
 
     // create the folder with all parent folders
     mkdirSync(path, { recursive: true });
@@ -97,7 +97,11 @@ Init a new Contentio project with the cli.
     spinner.text = "writing the content to the files..."
     writeFileSync(scriptPath, generateScriptTemplate(response.route))
     writeFileSync(pagePath, generatePageTemplate(response.route))
-    writeFileSync(configPath, generateConfigTemplate(response.route))
+    writeFileSync(configPath, generateConfigTemplate({
+        route: response.route,
+        contentDir: "content",
+        useContentTabGroup: true
+    }))
     // stop the loading spinner, all files are created now
     spinner.stop()
 

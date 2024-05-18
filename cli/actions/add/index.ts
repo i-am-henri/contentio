@@ -6,16 +6,18 @@ import chalk from "chalk";
 import checkConfig from "../../functions/check-config.js";
 import { error } from "../../functions/error.js";
 import prompts from "prompts";
+import getConfig from "../../functions/get-config.js";
+
 /**
  * Add a new route to the project. The config file will be used to get the config.
  */
-function addRoute(name: string) {
-    
+async function addRoute(name: string) {
+    await getConfig()
 }
 
 export default async function add(arg?: string) {
     // checks for the config file, if there is not a config file, an error will be triggered
-    checkConfig(() => error({
+    await checkConfig(() => error({
         message: "Config not found."
     }))
     // welcome command
@@ -45,8 +47,8 @@ ${arg ? `\nAdding route "${arg}".` : ""}
                 return true
             }
         });
-        addRoute(name.route)
+        await addRoute(name.route)
     } else {
-        addRoute(arg)
+        await addRoute(arg)
     }
 }
