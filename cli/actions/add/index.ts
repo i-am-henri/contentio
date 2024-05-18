@@ -7,12 +7,46 @@ import checkConfig from "../../functions/check-config.js";
 import { error } from "../../functions/error.js";
 import prompts from "prompts";
 import getConfig from "../../functions/get-config.js";
+import { config } from "../../types/config.js";
+import fs, { mkdirSync, writeFileSync } from "node:fs"
+import Folder from "../../functions/src-folder.js";
+import { generateScriptTemplate } from "../../templates/script.js";
+import { generatePageTemplate } from "../../templates/page.js";
+import { generateConfigTemplate } from "../../templates/config.js";
 
 /**
  * Add a new route to the project. The config file will be used to get the config.
  */
 async function addRoute(name: string) {
-    await getConfig()
+    const conf: config = await getConfig()
+    if (!conf) error({
+        message: "Content of config not found."
+    })
+    // creating the route-groupe folder
+    const folder = Folder() === "app" ? "app" : "src/app";
+
+    const route = name;
+    const path = folder === "app"
+        ? `./app/(content)/${route}/[slug]`
+        : `./src/app/(content)/${route}/[slug]`;
+    const scriptPath = path + `/${route}.ts`
+    const pagePath = path + `/page.tsx`
+    const configPath = `./config.contentio.json`
+
+    // create the folder with all parent folders
+    mkdirSync(path, { recursive: true });
+
+    // creating the folder for the content
+    mkdirSync("./content", { recursive: true })
+
+    // adding content to the 2 folders.
+    writeFileSync(scriptPath, generateScriptTemplate(name))
+    writeFileSync(pagePath, generatePageTemplate(name))
+    writeFileSync(configPath, generateConfigTemplate({
+        route: route,
+        contentDir: "content",
+        useContentTabGroup: true
+    }))
 }
 
 export default async function add(arg?: string) {
