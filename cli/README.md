@@ -18,6 +18,8 @@ We provide a modern CLI to add content as MDX to your nextjs application. The CL
 
 - [ ] add a own website ([https://contentio.vercel.app ](https://contentio.vercel.app`)or <https://contentio.henri.gg> )
 
+(❌ = not yet implemented | ✅ = already implemented)
+
 ---
 
 This project was made by [henri](https://henri.gg). Thanks to all contributer.
