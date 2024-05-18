@@ -1,4 +1,5 @@
-{"routes":[{"name":"docs"},{"name":"changelog"}],"contentDir":"content","useTabGroupe":true}rkdown } from './changelog'
+import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
+import { getMarkdown } from './changelog'
 import { Metadata } from 'next'
 
 export async function generateMetadata({
