@@ -5,7 +5,7 @@
 
 import chalk from "chalk";
 
-export default async function Edit() {
+export default async function edit() {
     console.log(`
 Contentio 2024
 ---
