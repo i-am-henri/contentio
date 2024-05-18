@@ -91,7 +91,7 @@ Init a new Contentio project with the cli.
     mkdirSync(path, { recursive: true });
 
     // creating the folder for the content
-    mkdirSync("./content", {recursive: true})
+    mkdirSync("./content", { recursive: true })
 
     // adding content to the 2 folders.
     spinner.text = "writing the content to the files..."

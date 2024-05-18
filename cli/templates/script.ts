@@ -19,5 +19,4 @@ export async function getMarkdown(slug: string): Promise<string> {
         notFound()
     }
     return raw
-}`
-}
+}`}
