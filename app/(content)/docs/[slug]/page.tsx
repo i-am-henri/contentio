@@ -1,5 +1,6 @@
-{"routes":[{"name":"blog"},{"name":"docs"}],"contentDir":"content","useTabGroupe":true}getMarkdown } from './docs'
+import { MDXRemote, compileMDX } from 'next-mdx-remote/rsc'
 import { Metadata } from 'next'
+import { getMarkdown } from './docs'
 
 export async function generateMetadata({
   params,
