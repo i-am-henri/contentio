@@ -5,10 +5,15 @@ We provide a modern CLI to add content as MDX to your nextjs application. The CL
 
 ### Missions:
 [*] add a `init` command
+
 [*] add a `add` command
+
 [*] add a own config file (`config.contentio.json`)
+
 [] add a `check` command
+
 [] add a `remove` command with the flag `--all` to remove contentio from the project entirely
+
 [] add a `edit` command 
 
 ---
