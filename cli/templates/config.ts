@@ -1,10 +1,9 @@
 
 export const generateConfigTemplate = (route: string): string => {
-    return `
-{
+    return `{
     "routes": [
-        {"name": "${route}"},
+        {
+            "name": "${route}"
+        }
     ]
-}
-`
-}
+}`}
