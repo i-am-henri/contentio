@@ -4,6 +4,7 @@
     Contentio 2024
     This file the root file. All functions will be added to "commander" here.
 */
+
 import { program } from "commander"
 import init from "./actions/init/index.js";
 import add from "./actions/add/index.js";
@@ -24,7 +25,8 @@ program.command('init')
 program.command('add')
   .description('Init a first route, add the folder for your content and create a "(content)" tabgroup.')
   .action(async (str, options) => {
-    await add()
+    console.log(options)
+    await add(options.args[0])
   });
 
 program.command('edit')
