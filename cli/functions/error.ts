@@ -7,10 +7,10 @@ export function error({
     code
 }: {
     message: string,
-    code: number
+    code?: number
 }) {
     console.error(`
-${chalk.red(`\n[error] ${message}`)}
+${chalk.red(`[error] ${message}`)}
     
 Because of this error, the program won't be continued.
 Do you think it's a bug? Please create an issue ${chalk.blue(`${terminalLinkSupported? terminalLink("here", "https://git.new/contentio"): "here: https://git.new/contentio"}`)}.
