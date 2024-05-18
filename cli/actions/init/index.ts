@@ -21,10 +21,11 @@ import { error } from "../../functions/error.js";
     Then all of the config will be used for the next content-route.
 */
 export default async function init() {
-    error({
-        code: 300,
-        message: "weil baum"
-    })
+    console.log(`
+${chalk.cyan("Contentio 2024")}
+
+Init a new Contentio project with the cli.
+    `)
     // warn the user to use a supported version of nextjs
     console.warn(chalk.yellow("[i] You must use NextJs version 13 or higher! Route-groups are not supported in lower versions."))
 
