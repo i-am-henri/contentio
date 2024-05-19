@@ -1,4 +1,4 @@
-import IndexDocs from "@/content/docs/index.mdx"
+import  {MDXRemote}  from "next-mdx-remote/rsc";
 import fs from "fs"
 import NextLink from "next/link"
 import {
@@ -20,7 +20,6 @@ import { Folder } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 
 export default async function Docs() {
     const raw = (await fs.promises.readFile("content/docs/index.mdx")).toString()
@@ -57,7 +56,7 @@ export default async function Docs() {
             <File>
                 index.tsx
             </File>
-            <IndexDocs />
+            <MDXRemote components={{ Viewer, Link }} source={withoutFrontmatter} />
             <Credenza>
                 <CredenzaTrigger className="cursor-pointer" asChild>
                     <span className="relative after:absolute after:bg-neutral-400 after:bottom-0 after:left-0 after:h-px after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300">
