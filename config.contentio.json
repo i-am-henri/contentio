@@ -1,9 +1,0 @@
-{
-    "routes": [
-        {
-            "name": "changelog"
-        }
-    ],
-    "contentDir": "content",
-    "useTabGroupe": true
-}

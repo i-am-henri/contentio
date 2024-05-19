@@ -1,6 +1,7 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import fs from "fs"
 import NextLink from "next/link"
+import {Tabs} from "@/components/ui/tabs"
 import {
     Credenza,
     CredenzaBody,
@@ -26,7 +27,7 @@ export default async function Docs() {
 
     return <div className="bg-[#151515] min-h-screen text-white flex items-start justify-center">
         <div className="w-[700px]">
-            <MDXRemote components={{ Viewer, Link, FileTree, FileTreeItem, File, FileTreeContent, FileTreeTrigger, ...standartComponents }} source={withoutFrontmatter} />
+            <MDXRemote components={{ Viewer, Link, FileTree, FileTreeItem, File, FileTreeContent, FileTreeTrigger, Tabs, ...standartComponents }} source={withoutFrontmatter} />
         </div>
     </div>
 }

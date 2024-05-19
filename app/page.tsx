@@ -48,12 +48,12 @@ export default function Home() {
           <h2 className="text-xl mb-2">start now</h2>
           <Tabs tabs={[
             {
-              name: "bun",
-              content: <Viewer code="bunx --bun contentio" language="bash" />
+              name: "npm",
+              content: <Viewer code="npx contentio@latest init" language="bash" />
             },
             {
-              name: "npm",
-              content: <Viewer code="npx contentio" language="bash" />
+              name: "bun",
+              content: <Viewer code="bunx --bun contentio@latest init" language="bash" />
             }
           ]} />
         </div>
