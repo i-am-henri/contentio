@@ -1,4 +1,6 @@
+import Viewer from "@/components/editor/Viewer";
 import Link from "@/components/ui/link";
+import { Tabs } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 
@@ -41,6 +43,19 @@ export default function Home() {
         <div>
           <h2 className="text-xl mb-2">Modern styling</h2>
           <p className="text-[#d0d0d0]">The cli provides a function a to add prebuilt ui elements which are optimized for docs. This is working like the shadcn-ui components. In-Fact, some of the components required to use shadcn components. You can customize all of the components, and the color, border-radius and so on is based on custom preferenzes, which are defined in your global css file.</p>
+        </div>
+        <div>
+          <h2 className="text-xl mb-2">start now</h2>
+          <Tabs tabs={[
+            {
+              name: "bun",
+              content: <Viewer code="bunx --bun contentio" language="bash" />
+            },
+            {
+              name: "npm",
+              content: <Viewer code="npx contentio" language="bash" />
+            }
+          ]} />
         </div>
         <div className="text-[#d0d0d0] pb-4">
           <hr className="mb-4 border-[#d0d0d0]" />

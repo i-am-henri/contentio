@@ -26,8 +26,21 @@ export default async function Docs() {
 
     return <div className="bg-[#151515] min-h-screen text-white flex items-start justify-center">
         <div className="w-[700px]">
-        
-            <MDXRemote components={{ Viewer, Link, FileTree, FileTreeItem, File, FileTreeContent, FileTreeTrigger  }} source={withoutFrontmatter} />
+            <MDXRemote components={{ Viewer, Link, FileTree, FileTreeItem, File, FileTreeContent, FileTreeTrigger, ...standartComponents }} source={withoutFrontmatter} />
         </div>
     </div>
+}
+const standartComponents = {
+    h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+        <h1  className="text-3xl font-bold" {...props} />
+    ),
+    h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+        <h2  className="text-2xl font-bold" {...props} />
+    ),
+    h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+        <h3  className="text-xl font-bold" {...props} />
+    ),
+    h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+        <h4  className="text-large font-bold" {...props} />
+    )
 }

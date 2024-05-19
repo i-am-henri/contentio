@@ -9,7 +9,7 @@ export default async function Viewer({ code, language = "typescript" }: { code: 
     })
 
     return (
-        <div className='border docs my-1 border-black rounded-md p-2 bg-[#101010] flex' >
+        <div className='border w-full docs my-1 border-black rounded-md p-2 bg-[#101010] flex' >
             <div dangerouslySetInnerHTML={{ __html: html }} className='w-full'></div>
             <div className='w-5 h-full ml-5'>
                 <Copy text={code}>
