@@ -2,9 +2,41 @@
 
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
-import { ChevronDown, Folder, FileArchive  } from "lucide-react"
+import { ChevronDown, Folder, FileArchive } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+// Example File tree
+{/* <div className="bg-[#101010] rounded-md border border-black p-2">
+  <FileTree type="single" collapsible>
+    <FileTreeItem className="border-none outline-none p-0" value="item-1">
+      <FileTreeTrigger className="p-0">app</FileTreeTrigger>
+      <FileTreeContent>
+        <FileTree type="single" collapsible>
+          <FileTreeItem className="border-none  outline-none p-0" value="item-1">
+            <FileTreeTrigger className="p-0">Is it accessible?</FileTreeTrigger>
+            <FileTreeContent>
+              <File >
+                index.tsx
+              </File>
+            </FileTreeContent>
+          </FileTreeItem>
+        </FileTree>
+        <File>
+          page.tsx
+        </File>
+        <File>
+          blog.ts
+        </File>
+      </FileTreeContent>
+    </FileTreeItem>
+  </FileTree>
+  <File>
+    index.tsx
+  </File>
+  <File>
+    index.tsx
+  </File>
+</div> */}
 
 const FileTree = AccordionPrimitive.Root
 
@@ -33,7 +65,7 @@ const FileTreeTrigger = React.forwardRef<
       )}
       {...props}
     >
-      <Folder id="folder" className="mr-2 h-4 w-4  "/>
+      <Folder id="folder" className="mr-2 h-4 w-4  " />
       {children}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
@@ -54,12 +86,12 @@ const FileTreeContent = React.forwardRef<
 ))
 
 FileTreeContent.displayName = AccordionPrimitive.Content.displayName
-const File = ({children}: {children: React.ReactNode}) => {
+const File = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={"flex flex-1 items-center justify-start font-medium transition-all hover:underline "}
     >
-      <FileArchive id="folder" className="mr-2 h-4 w-4  "/>
+      <FileArchive id="folder" className="mr-2 h-4 w-4  " />
       {children}
     </div>
   )

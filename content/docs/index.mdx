@@ -12,4 +12,34 @@ Or:
 <Viewer code={`npx contentio@latest help`} language="bash" />
 <br />
 If you ran this command, you should get this file structure:
-
+<div className="bg-[#101010] rounded-md border border-black p-2">
+  <FileTree type="single" collapsible>
+    <FileTreeItem className="border-none outline-none p-0" value="item-1">
+      <FileTreeTrigger className="p-0">app</FileTreeTrigger>
+      <FileTreeContent>
+        <FileTree type="single" collapsible>
+          <FileTreeItem className="border-none  outline-none p-0" value="item-1">
+            <FileTreeTrigger className="p-0">Is it accessible?</FileTreeTrigger>
+            <FileTreeContent>
+              <File >
+                index.tsx
+              </File>
+            </FileTreeContent>
+          </FileTreeItem>
+        </FileTree>
+        <File>
+          page.tsx
+        </File>
+        <File>
+          blog.ts
+        </File>
+      </FileTreeContent>
+    </FileTreeItem>
+  </FileTree>
+  <File>
+    index.tsx
+  </File>
+  <File>
+    index.tsx
+  </File>
+</div>
