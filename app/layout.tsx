@@ -3,6 +3,8 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GeistSans } from 'geist/font/sans';
+import Link from "@/components/ui/link";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "next-docs | Content for your app.",
@@ -16,11 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={GeistSans.className}>
+      <body className={cn(GeistSans.className, "bg-[#151515] min-h-screen text-white flex items-start justify-center")}>
         <TooltipProvider>
           <Toaster />
-          {children}
-        </TooltipProvider></body>
+          <div className="w-[700px] pt-20">
+            {children}
+          </div>
+        </TooltipProvider>
+      </body>
     </html>
   );
 }
