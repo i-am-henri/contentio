@@ -1,9 +1,10 @@
 # Getting started
 Contentio is a modern CLI to add content to an NextJS Application. This works with <Link href="https://mdxjs.com">MDX</Link> and <Link href="https://github.com/hashicorp/next-mdx-remote">next-mdx-remote</Link>.
 <br/>
+<br />
 ## Get started with this command:
 <br />
-<Tabs tabs={[
+<Tabs  tabs={[
   {
     name: "npm",
     content: <Viewer code="npx contentio@latest init" language="bash" />
@@ -14,10 +15,19 @@ Contentio is a modern CLI to add content to an NextJS Application. This works wi
   }
 ]} />
 <br />
-If you want to get an overview ran this command:
-<Viewer code={`npx contentio@latest`} language="bash" />
-Or:
-<Viewer code={`npx contentio@latest help`} language="bash" />
+<br />
+### If you want to get an overview about the cli, run this command:
+<br />
+<Tabs tabs={[
+  {
+    name: "npm",
+    content: <Viewer code="npx contentio@latest help" language="bash" />
+  },
+  {
+    name: "bun",
+    content: <Viewer code="bunx --bun contentio@latest help" language="bash" />
+  }
+]} />
 <br />
 If you ran this command, you should get this file structure:
 <div className="bg-[#101010] rounded-md border border-black p-2">
