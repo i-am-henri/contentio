@@ -16,13 +16,20 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={cn(GeistSans.className, "bg-[#151515] min-h-screen text-white flex items-start justify-center")}>
-                <TooltipProvider>
-                    <Toaster />
-                    {children}
-                </TooltipProvider>
-            </body>
-        </html>
+        <div>
+            <div className="flex mb-16 items-center">
+                <h2 className=" mr-2">contentio</h2>
+                <Link href="/" className="mr-2">
+                    home
+                </Link>
+                <Link className="mr-2" href="/docs">
+                    docs
+                </Link>
+                <Link target="blank" href="https://git.new/contentio" >
+                    github
+                </Link>
+            </div>
+            {children}
+        </div>
     );
 }

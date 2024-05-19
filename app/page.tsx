@@ -12,7 +12,7 @@ export default function Home() {
         <Link className="mr-2" href="/docs">
           docs
         </Link>
-        <Link href="https://git.new/contentio">
+        <Link href="https://git.new/contentio" target="blank">
           github
         </Link>
       </div>
