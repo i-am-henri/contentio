@@ -1,4 +1,4 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
+import IndexDocs from "@/content/docs/index.mdx"
 import fs from "fs"
 import NextLink from "next/link"
 import {
@@ -57,9 +57,44 @@ export default async function Docs() {
             <File>
                 index.tsx
             </File>
-            
-            <MDXRemote components={{ Viewer, Link }} source={withoutFrontmatter} />
-            
+            <IndexDocs />
+            <Credenza>
+                <CredenzaTrigger className="cursor-pointer" asChild>
+                    <span className="relative after:absolute after:bg-neutral-400 after:bottom-0 after:left-0 after:h-px after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300">
+                        <span className="text-neutral-400">authors: henri</span>
+                    </span>
+                </CredenzaTrigger>
+                <CredenzaContent>
+                    <CredenzaHeader>
+                        <CredenzaTitle>The authors of this page:</CredenzaTitle>
+                        <CredenzaDescription>
+                            Peope who build this page.
+                        </CredenzaDescription>
+                    </CredenzaHeader>
+                    <CredenzaBody className="grid grid-cols-3">
+                        <div className="flex items-center">
+                            <Avatar>
+                                <AvatarFallback>HN</AvatarFallback>
+                                <AvatarImage src="https://avatars.githubusercontent.com/u/98414850?v=4" />
+                            </Avatar>
+                            <p className="ml-2">henri</p>
+                        </div>
+                    </CredenzaBody>
+                    <CredenzaFooter>
+                        <NextLink
+                            href={`https://git.new/contentio`}
+                            className={cn(buttonVariants({ variant: "default" }))}
+                        >
+                            GitHub
+                        </NextLink>
+                        <CredenzaClose asChild>
+                            <Button
+                                variant={"outline"}
+                            >Close</Button>
+                        </CredenzaClose>
+                    </CredenzaFooter>
+                </CredenzaContent>
+            </Credenza>
         </div>
     </div>
 }
