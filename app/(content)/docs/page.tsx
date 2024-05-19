@@ -26,7 +26,7 @@ export default async function Docs() {
     const withoutFrontmatter: string = raw.replace(/---[sS]*?---/, '');
 
     return <div className="bg-[#151515] min-h-screen text-white flex items-start justify-center">
-        <div className="w-[800px]">
+        <div className="w-[700px]">
             <FileTree type="single" collapsible>
                 <FileTreeItem className="border-none outline-none p-0" value="item-1">
                     <FileTreeTrigger className="p-0">app</FileTreeTrigger>
