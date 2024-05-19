@@ -49,7 +49,7 @@ const FileTreeContent = React.forwardRef<
     className="overflow-hidden ml-3 text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn("pb-4 pt-0", className)}>{children}</div>
+    <div className={cn("pb-1 pt-0", className)}>{children}</div>
   </AccordionPrimitive.Content>
 ))
 
