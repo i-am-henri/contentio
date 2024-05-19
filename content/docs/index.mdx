@@ -1,63 +1,63 @@
 # Getting started
+
 Contentio is a modern CLI to add content to an NextJS Application. This works with <Link href="https://mdxjs.com">MDX</Link> and <Link href="https://github.com/hashicorp/next-mdx-remote">next-mdx-remote</Link>.
-<br/>
+
+<br />
 <br />
 ## Get started with this command:
 <br />
-<Tabs  tabs={[
-  {
-    name: "npm",
-    content: <Viewer code="npx contentio@latest init" language="bash" />
-  },
-  {
-    name: "bun",
-    content: <Viewer code="bunx --bun contentio@latest init" language="bash" />
-  }
-]} />
+<Tabs
+  customId="install"
+  tabs={[
+    {
+      name: "npm",
+      content: <Viewer code="npx contentio@latest init" language="bash" />,
+    },
+    {
+      name: "bun",
+      content: (
+        <Viewer code="bunx --bun contentio@latest init" language="bash" />
+      ),
+    },
+  ]}
+/>
 <br />
 <br />
 ### If you want to get an overview about the cli, run this command:
 <br />
-<Tabs tabs={[
-  {
-    name: "npm",
-    content: <Viewer code="npx contentio@latest help" language="bash" />
-  },
-  {
-    name: "bun",
-    content: <Viewer code="bunx --bun contentio@latest help" language="bash" />
-  }
-]} />
+<Tabs
+  customId="help"
+  tabs={[
+    {
+      name: "npm",
+      content: <Viewer code="npx contentio@latest help" language="bash" />,
+    },
+    {
+      name: "bun",
+      content: (
+        <Viewer code="bunx --bun contentio@latest help" language="bash" />
+      ),
+    },
+  ]}
+/>
 <br />
-If you ran this command, you should get this file structure:
-<div className="bg-[#101010] rounded-md border border-black p-2">
-  <FileTree type="single" collapsible>
-    <FileTreeItem className="border-none outline-none p-0" value="item-1">
-      <FileTreeTrigger className="p-0">app</FileTreeTrigger>
-      <FileTreeContent>
-        <FileTree type="single" collapsible>
-          <FileTreeItem className="border-none  outline-none p-0" value="item-1">
-            <FileTreeTrigger className="p-0">Is it accessible?</FileTreeTrigger>
-            <FileTreeContent>
-              <File >
-                index.tsx
-              </File>
-            </FileTreeContent>
-          </FileTreeItem>
-        </FileTree>
-        <File>
-          page.tsx
-        </File>
-        <File>
-          blog.ts
-        </File>
-      </FileTreeContent>
-    </FileTreeItem>
-  </FileTree>
-  <File>
-    index.tsx
-  </File>
-  <File>
-    index.tsx
-  </File>
-</div>
+### You can now expect this file structure:
+<Tabs
+  customId="fileStructure"
+  tabs={[
+    {
+      name: "app-dir",
+      content: (
+        <AppFileDir />
+      ),
+    },
+    {
+      name: "src-dir",
+      content: (
+        <SrcFileDir />
+      ),
+    },
+  ]}
+/>
+
+<p style={{marginTop: "12px", color: "#d0d0d0"}}>Thanks for everyone who helped creating and maintaining this package.</p>

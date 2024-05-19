@@ -46,7 +46,7 @@ export default function Home() {
         </div>
         <div>
           <h2 className="text-xl mb-2">start now</h2>
-          <Tabs tabs={[
+          <Tabs customId="installHome" tabs={[
             {
               name: "npm",
               content: <Viewer code="npx contentio@latest init" language="bash" />

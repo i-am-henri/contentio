@@ -14,14 +14,16 @@ type TabsProps = {
   containerClassName?: string;
   activeTabClassName?: string;
   tabClassName?: string;
-  tabs: Tab[]
+  tabs: Tab[],
+  customId: string
 };
 
 export function Tabs({
   containerClassName,
   activeTabClassName,
   tabClassName,
-  tabs
+  tabs,
+  customId
 }: TabsProps) {
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
@@ -46,7 +48,7 @@ export function Tabs({
           >
             {activeIdx === index && (
               <motion.div
-                layoutId="clicked-button"
+                layoutId={customId}
                 transition={{ duration: 0.2 }}
                 className={cn(
                   "absolute inset-0 rounded-full bg-white",
