@@ -14,6 +14,9 @@ export default function Home() {
         <Link className="mr-2" href="/docs">
           docs
         </Link>
+        <Link className="mr-2" href="/components">
+          components
+        </Link>
         <Link href="https://git.new/contentio" target="blank">
           github
         </Link>

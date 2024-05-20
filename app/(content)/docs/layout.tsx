@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { GeistSans } from 'geist/font/sans';
 import Link from "@/components/ui/link";
 import { cn } from "@/lib/utils";
+import MotionDiv from "@/components/custom/motion-div";
 
 export const metadata: Metadata = {
     title: "next-docs | Content for your app.",
@@ -24,6 +25,9 @@ export default function RootLayout({
                 </Link>
                 <Link className="mr-2" href="/docs">
                     docs
+                </Link>
+                <Link className="mr-2" href="/docs">
+                    components
                 </Link>
                 <Link target="blank" href="https://git.new/contentio" >
                     github

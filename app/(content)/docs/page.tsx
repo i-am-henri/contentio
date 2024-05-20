@@ -101,13 +101,10 @@ function SrcFileDir() {
                                 </FileTreeContent>
                             </FileTreeItem>
                         </FileTree>
-                        <File>page.tsx</File>
-                        <File>blog.ts</File>
                     </FileTreeContent>
                 </FileTreeItem>
             </FileTree>
-            <File>index.tsx</File>
-            <File>index.tsx</File>
+            <File>config.contentio.json</File>
         </div>
     )
 };
