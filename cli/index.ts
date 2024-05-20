@@ -10,6 +10,7 @@ import init from "./actions/init/index.js";
 import add from "./actions/add/index.js";
 import check from "./actions/check/index.js";
 import remove from "./actions/remove/index.js";
+import help from "./actions/help/index.js";
 
 program.name('contentio')
   .description('CLI to add content to any nextjs application')
@@ -38,6 +39,12 @@ program.command('remove')
   .description('Init a first route, add the folder for your content and create a "(content)" tabgroup.')
   .action(async (str, options) => {
     await remove()
+  });
+
+program.command('help')
+  .description('Describes contentio')
+  .action(async (str, options) => {
+    await help()
   });
 
 program.parse();

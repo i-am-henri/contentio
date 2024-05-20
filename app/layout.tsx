@@ -7,8 +7,33 @@ import Link from "@/components/ui/link";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "next-docs | Content for your app.",
-  description: "Next-docs is a modern way to add content to your nextjs app.",
+  title: {
+    default: "Contentio | the contnet package",
+    absolute: "Home | Contentio",
+    template: "%s | Contentio"
+  },
+  description: "Contentio is a NodeJS Cli to add and handle content in NextJS.",
+  keywords: [
+    "NextJS", "nextjs", "next", "markdown nextjs", "nextjs cli", "markdown in nextjs", "markdown cli", "markdown nextjs cli", "contentio", "content"
+  ],
+  authors: [
+    {
+      name: "henri",
+      url: "https://henri.gg"
+    }
+  ],
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "Contentio",
+    description: "Contentio is a Cli to add content fast and easy to nextjs.",
+    type: "website",
+    siteName: "contentio"
+  }
+
 };
 
 export default function RootLayout({
