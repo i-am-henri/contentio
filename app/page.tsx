@@ -60,10 +60,13 @@ export default function Home() {
             }
           ]} />
         </div>
-        <div className="text-[#d0d0d0] pb-4">
+        <footer className="text-[#d0d0d0] pb-4">
           <hr className="mb-4 border-[#d0d0d0]" />
           made by <Link href="https://henri.gg">henri</Link> and the <Link href="https://git.new/contentio">community on github</Link>.
-        </div>
+          <h1 className="text-9xl mt-5 mb-5 text-transparent">
+            Contentio
+          </h1>
+        </footer>
       </div>
     </>
   )
