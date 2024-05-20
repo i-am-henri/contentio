@@ -2,11 +2,15 @@ import chalk from "chalk"
 import prompts, { Choice } from "prompts";
 import checkConfig from "../../functions/check-config";
 import getConfig from "../../functions/get-config";
+import fs, { rm, rmdir } from "node:fs"
+import Folder from "../../functions/src-folder";
+import { error } from "../../functions/error";
 
 /*
     Contentio 2024
     This file is for removing a route from the project.
 */
+
 export default async function remove() {
     console.log(`
 ${chalk.cyan("Contentio 2024")}
@@ -42,6 +46,19 @@ Remove a single route or the cli from your project.`)
         message: 'Which route do you want to remove?',
         choices: arr
     });
+    // remove the choosen things
+    if (removeSelect.remove_select == 0) {
+        // remove the entire cli
+        let folderArr: string[] = []
+        conf.routes.forEach((route) => {
+            rmdir("./" + Folder() + "/(content)/" + route.name, (err) => {
+                if (err) error({
+                    message: err.message
+                })
+            })
+        })
+        
+    }
 
     process.exit(0)
 }
