@@ -37,6 +37,7 @@ Remove a single route or the cli from your project.`)
         ]
     });
     console.log(removeSelect.remove_select)
+
     // remove the choosen things
     if (removeSelect.remove_select == 0) {
         const confirmChoice = await prompts({
@@ -84,6 +85,8 @@ ${chalk.green("Sucess. Contentio is successfully removed from your nextjs projec
 
         process.exit(0)
     }
+    // if the user only wants to delete one route, this question will be triggered, asking which route should be deleted
+
     let arr: Choice[] = []
     conf.routes.forEach((route) => {
         arr.push({
@@ -98,5 +101,9 @@ ${chalk.green("Sucess. Contentio is successfully removed from your nextjs projec
     });
 
 
+    rmSync("./" + Folder() + "/(content)/" + arr[removeRoute.remove_route], {
+        recursive: true
+    })
+    console.log(chalk.green("Deleted route " + arr[removeRoute.remove_route] + "sucessfully."))
     process.exit(0)
 }
