@@ -32,24 +32,35 @@ function AppFileDir() {
                     <FileTreeContent>
                         <FileTree type="single" collapsible>
                             <FileTreeItem
-                                className="border-none  outline-none p-0"
+                                className="border-none outline-none p-0"
                                 value="item-1"
                             >
                                 <FileTreeTrigger className="p-0">
-                                    Is it accessible?
+                                    blog
                                 </FileTreeTrigger>
                                 <FileTreeContent>
-                                    w<File>index.tsx</File>
+                                    <FileTree type="single" collapsible>
+                                        <FileTreeItem
+                                            className="border-none outline-none p-0"
+                                            value="item-1"
+                                        >
+                                            <FileTreeTrigger className="p-0">
+                                                [slug]
+                                            </FileTreeTrigger>
+                                            <FileTreeContent>
+                                                <File>page.tsx</File>
+                                                <File>blog.ts</File>
+                                            </FileTreeContent>
+                                        </FileTreeItem>
+                                    </FileTree>
+                                    <File>page.tsx</File>
                                 </FileTreeContent>
                             </FileTreeItem>
                         </FileTree>
-                        <File>page.tsx</File>
-                        <File>blog.ts</File>
                     </FileTreeContent>
                 </FileTreeItem>
             </FileTree>
-            <File>index.tsx</File>
-            <File>index.tsx</File>
+            <File>config.contentio.json</File>
         </div>
     )
 };
@@ -61,18 +72,32 @@ function SrcFileDir() {
                     className="border-none outline-none p-0"
                     value="item-1"
                 >
-                    <FileTreeTrigger className="p-0">app</FileTreeTrigger>
+                    <FileTreeTrigger className="p-0">src</FileTreeTrigger>
                     <FileTreeContent>
                         <FileTree type="single" collapsible>
                             <FileTreeItem
-                                className="border-none  outline-none p-0"
+                                className="border-none outline-none p-0"
                                 value="item-1"
                             >
                                 <FileTreeTrigger className="p-0">
-                                    Is it accessible?
+                                    blog
                                 </FileTreeTrigger>
                                 <FileTreeContent>
-                                    w<File>index.tsx</File>
+                                    <FileTree type="single" collapsible>
+                                        <FileTreeItem
+                                            className="border-none outline-none p-0"
+                                            value="item-1"
+                                        >
+                                            <FileTreeTrigger className="p-0">
+                                                [slug]
+                                            </FileTreeTrigger>
+                                            <FileTreeContent>
+                                                <File>page.tsx</File>
+                                                <File>blog.ts</File>
+                                            </FileTreeContent>
+                                        </FileTreeItem>
+                                    </FileTree>
+                                    <File>page.tsx</File>
                                 </FileTreeContent>
                             </FileTreeItem>
                         </FileTree>
