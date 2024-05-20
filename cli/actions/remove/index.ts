@@ -2,7 +2,7 @@ import chalk from "chalk"
 import prompts, { Choice } from "prompts";
 import checkConfig from "../../functions/check-config";
 import getConfig from "../../functions/get-config";
-import fs, { rm, rmdir } from "node:fs"
+import fs, { rm, rmSync, rmdir } from "node:fs"
 import Folder from "../../functions/src-folder";
 import { error } from "../../functions/error";
 
@@ -46,19 +46,38 @@ Remove a single route or the cli from your project.`)
         });
         // removes all of the folders in the content tabgroupe which are also in the conf
         conf.routes.forEach((route) => {
-            rmdir("./" + Folder() + "/(content)/" + route.name, (err) => {
-                if (err) error({
-                    message: err.message
-                })
+            rmSync("./" + Folder() + "/(content)/" + route.name, {
+                recursive: true
             })
         })
         console.log(chalk.green("[i] Removed all of the tabgroups."))
+        fs.readdir("./" + Folder() + "/(content)/", function (err, files) {
+            if (err) {
+                error({
+                    message: err.message
+                })
+            }
+            if (!files.length) {
+                fs.rmdir("./" + Folder() + "/(content)", (err) => {
+                    if (err) error({
+                        message: err.message
+                    })
+                    console.log(chalk.green("[i] Removed the (content) tabgroup."))
+                })
+            } else {
+                console.log(chalk.yellow("[i] Removed not the (content) tabgroup because files (which are not from contentio) are in this folder."))
+            }
+        });
+
+        // remove the config file
         rm("./config.contentio.json", (err) => {
             if (err) error({
                 message: err.message
             })
         })
         console.log(chalk.green("[i] Removed the config."))
+
+        // sucess message
         console.log(`
 ${chalk.green("Sucess. Contentio is successfully removed from your nextjs project.")}
         `)
