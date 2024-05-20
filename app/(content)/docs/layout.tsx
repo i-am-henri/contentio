@@ -26,7 +26,7 @@ export default function RootLayout({
                 <Link className="mr-2" href="/docs">
                     docs
                 </Link>
-                <Link className="mr-2" href="/docs">
+                <Link className="mr-2" href="/components">
                     components
                 </Link>
                 <Link target="blank" href="https://git.new/contentio" >
