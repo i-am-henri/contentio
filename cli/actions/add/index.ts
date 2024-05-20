@@ -59,6 +59,7 @@ async function addRoute(name: string) {
             message: err.message
         })
     })
+    mkdirSync("./content/" + route, { recursive: true })
 
     conf.routes.push({
         name

@@ -36,7 +36,6 @@ Remove a single route or the cli from your project.`)
             }
         ]
     });
-    console.log(removeSelect.remove_select)
 
     // remove the choosen things
     if (removeSelect.remove_select == 0) {
@@ -85,8 +84,8 @@ ${chalk.green("Sucess. Contentio is successfully removed from your nextjs projec
 
         process.exit(0)
     }
-    // if the user only wants to delete one route, this question will be triggered, asking which route should be deleted
 
+    // if the user only wants to delete one route, this question will be triggered, asking which route should be deleted
     let arr: Choice[] = []
     conf.routes.forEach((route) => {
         arr.push({
