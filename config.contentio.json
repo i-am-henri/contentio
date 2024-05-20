@@ -2,6 +2,12 @@
     "routes": [
         {
             "name": "blog"
+        },
+        {
+            "name": "changelog"
+        },
+        {
+            "name": "docs"
         }
     ],
     "contentDir": "content",
