@@ -2,7 +2,7 @@ import chalk from "chalk"
 import prompts, { Choice } from "prompts";
 import checkConfig from "../../functions/check-config";
 import getConfig from "../../functions/get-config";
-import fs, { rm, rmSync, rmdir } from "node:fs"
+import fs, { rm, rmSync, rmdir, rmdirSync } from "node:fs"
 import Folder from "../../functions/src-folder";
 import { error } from "../../functions/error";
 
@@ -76,7 +76,7 @@ Remove a single route or the cli from your project.`)
             })
         })
         console.log(chalk.green("[i] Removed the config."))
-
+        rmdirSync("./content", {recursive: true})
         // sucess message
         console.log(`
 ${chalk.green("Sucess. Contentio is successfully removed from your nextjs project.")}
