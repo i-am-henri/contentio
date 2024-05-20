@@ -120,7 +120,7 @@ export default async function Docs() {
 }
 const standartComponents = {
     h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-        <h1 className="text-3xl font-bold" {...props} />
+        <h1 className="text-3xl underline font-bold" {...props} />
     ),
     h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
         <h2 className="text-2xl font-bold" {...props} />
