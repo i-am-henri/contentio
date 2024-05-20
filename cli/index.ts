@@ -8,7 +8,6 @@
 import { program } from "commander"
 import init from "./actions/init/index.js";
 import add from "./actions/add/index.js";
-import edit from "./actions/edit/index.js";
 import check from "./actions/check/index.js";
 import remove from "./actions/remove/index.js";
 
@@ -27,12 +26,6 @@ program.command('add')
   .action(async (str, options) => {
     console.log(options)
     await add(options.args[0])
-  });
-
-program.command('edit')
-  .description('Init a first route, add the folder for your content and create a "(content)" tabgroup.')
-  .action(async (str, options) => {
-    await edit()
   });
 
 program.command('check')
