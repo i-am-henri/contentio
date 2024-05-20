@@ -16,7 +16,9 @@ export default async function remove() {
 ${chalk.cyan("Contentio 2024")}
 
 Remove a single route or the cli from your project.`)
-    checkConfig()
+    checkConfig(() => error({
+        message: "No config found!"
+    }))
     const conf = await getConfig()
     // asking for the name of the route
     const removeSelect = await prompts({
@@ -34,6 +36,35 @@ Remove a single route or the cli from your project.`)
             }
         ]
     });
+    console.log(removeSelect.remove_select)
+    // remove the choosen things
+    if (removeSelect.remove_select == 0) {
+        const confirmChoice = await prompts({
+            type: 'confirm',
+            name: 'confirm_select',
+            message: 'We would also remove the content folder. Are you sure to remove Contentio?',
+        });
+        // removes all of the folders in the content tabgroupe which are also in the conf
+        conf.routes.forEach((route) => {
+            rmdir("./" + Folder() + "/(content)/" + route.name, (err) => {
+                if (err) error({
+                    message: err.message
+                })
+            })
+        })
+        console.log(chalk.green("[i] Removed all of the tabgroups."))
+        rm("./config.contentio.json", (err) => {
+            if (err) error({
+                message: err.message
+            })
+        })
+        console.log(chalk.green("[i] Removed the config."))
+        console.log(`
+${chalk.green("Sucess. Contentio is successfully removed from your nextjs project.")}
+        `)
+
+        process.exit(0)
+    }
     let arr: Choice[] = []
     conf.routes.forEach((route) => {
         arr.push({
@@ -46,19 +77,7 @@ Remove a single route or the cli from your project.`)
         message: 'Which route do you want to remove?',
         choices: arr
     });
-    // remove the choosen things
-    if (removeSelect.remove_select == 0) {
-        // remove the entire cli
-        let folderArr: string[] = []
-        conf.routes.forEach((route) => {
-            rmdir("./" + Folder() + "/(content)/" + route.name, (err) => {
-                if (err) error({
-                    message: err.message
-                })
-            })
-        })
-        
-    }
+
 
     process.exit(0)
 }

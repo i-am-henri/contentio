@@ -13,12 +13,17 @@ import { generateScriptTemplate } from "../../templates/script.js";
 import { generatePageTemplate } from "../../templates/page.js";
 import { generateConfigTemplate } from "../../templates/config.js";
 import { error } from "../../functions/error.js";
+import checkConfig from "../../functions/check-config.js";
 /*
     Init a new project with contentio. This is the init command.
-    This command creates a contentio.json file on the root of your project. 
+    This command creates a config.contentio.json file on the root of your project. 
     Then all of the config will be used for the next content-route.
 */
 export default async function init() {
+    const conf = await checkConfig()
+    if (conf) error({
+        message: "You already init contentio. Do you want to remove it? => npx contentio remove"
+    })
     console.log(`
 ${chalk.cyan("Contentio 2024")}
 
@@ -27,29 +32,23 @@ Init a new Contentio project with the cli.
     // warn the user to use a supported version of nextjs
     console.warn(chalk.yellow("[i] You must use NextJs version 13 or higher! Route-groups are not supported in lower versions."))
 
-    // checking if a config file exists
-    if (existsSync("./contentio.json")) {
-        // the config file exists, the programm will be stopped
-        console.log(chalk.green("[i] We found a config file, the programm will be stopped, if you want to edit the config, please change the values in your json file."))
-        process.exit(1)
-    }
-
     // checking if you are on the root of your project
     if (!existsSync("./package.json") || !existsSync("./node_modules")) {
-        console.log(chalk.red("[i] It looks like, you are not on the root of your project. Please navigate first to the root."))
-        process.exit(1)
+        error({
+            message: "It looks like, you are not on the root of your project. Please navigate first to the root."
+        })
     }
 
     // checking if you are using nextjs by scanning the project for next.config.mjs file and the app-directory
-    if (!(existsSync("./app") || existsSync("./src/app")) || !existsSync("./next.config.mjs")) {
-        console.log(chalk.red("[i] We are not able to find a next.config.mjs file or the app direcory. Make sure, you are in the right folder."))
-        process.exit(1)
+    if (!(existsSync("./app") || existsSync("./src/app")) || !existsSync("./next.config.mjs") || existsSync("./next.config.js")) {
+        error({
+            message: "We are not able to find a next.config.mjs file or the app direcory. Make sure, you are in the right folder."
+        })
     }
 
     // checking if you're using typescript
     if (!existsSync("./tsconfig.json")) {
-        console.log(chalk.red("[i] At the time, we are not supporting Javascript, please use Typescript instead. If you want, you can help us, creating a supported version of this cli on github " + terminalLinkSupported ? terminalLink("here", "https://git.new/contentio") : "(https://git.new/contentio)" + "."))
-        process.exit(1)
+        error({message: `At the time, we are not supporting Javascript, please use Typescript instead. If you want, you can help us, creating a supported version of this cli on github " + terminalLinkSupported ? terminalLink("here", "https://git.new/contentio") : "(https://git.new/contentio)" + ".")`})
     }
 
     // asking for the name of the route
