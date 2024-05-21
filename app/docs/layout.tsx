@@ -6,10 +6,6 @@ import Link from "@/components/ui/link";
 import { cn } from "@/lib/utils";
 import MotionDiv from "@/components/custom/motion-div";
 
-export const metadata: Metadata = {
-    title: "next-docs | Content for your app.",
-    description: "Next-docs is a modern way to add content to your nextjs app.",
-};
 
 export default function RootLayout({
     children,

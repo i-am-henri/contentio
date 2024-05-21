@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 }
 export const metadata: Metadata = {
   title: {
-    default: "Contentio | the contnet package",
+    default: "Contentio | the content package",
     absolute: "Home | Contentio",
     template: "%s | Contentio"
   },

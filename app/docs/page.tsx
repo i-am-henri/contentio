@@ -20,6 +20,12 @@ import { FileTree, FileTreeContent, FileTreeItem, FileTreeTrigger, File } from "
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Docs"
+}
+
 function AppFileDir() {
     return (
         <div className="bg-[#101010] rounded-md border border-black p-2">
