@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GeistSans } from 'geist/font/sans';
 import Link from "@/components/ui/link";
 import { cn } from "@/lib/utils";
-
+export const viewport: Viewport = {
+  themeColor: 'black',
+}
 export const metadata: Metadata = {
   title: {
     default: "Contentio | the contnet package",
@@ -46,7 +48,7 @@ export default function RootLayout({
       <body className={cn(GeistSans.className, "bg-[#151515] min-h-screen text-white flex items-start justify-center")}>
         <TooltipProvider>
           <Toaster />
-          <div className="w-[700px] pt-20">
+          <div className="lg:w-[650px] xl:w-[700px] pt-20">
             {children}
           </div>
         </TooltipProvider>

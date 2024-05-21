@@ -75,29 +75,38 @@ function SrcFileDir() {
                     <FileTreeTrigger className="p-0">src</FileTreeTrigger>
                     <FileTreeContent>
                         <FileTree type="single" collapsible>
-                            <FileTreeItem
-                                className="border-none outline-none p-0"
-                                value="item-1"
-                            >
+                            <FileTreeItem value="item-1"  className="border-none outline-none p-0">
                                 <FileTreeTrigger className="p-0">
-                                    blog
+                                    app
                                 </FileTreeTrigger>
                                 <FileTreeContent>
                                     <FileTree type="single" collapsible>
                                         <FileTreeItem
-                                            className="border-none outline-none p-0"
                                             value="item-1"
+                                            className="border-none outline-none p-0"
                                         >
                                             <FileTreeTrigger className="p-0">
-                                                [slug]
+                                                blog
                                             </FileTreeTrigger>
                                             <FileTreeContent>
+                                                <FileTree type="single" collapsible>
+                                                    <FileTreeItem
+                                                        className="border-none outline-none p-0"
+                                                        value="item-1"
+                                                    >
+                                                        <FileTreeTrigger className="p-0">
+                                                            [slug]
+                                                        </FileTreeTrigger>
+                                                        <FileTreeContent>
+                                                            <File>page.tsx</File>
+                                                            <File>blog.ts</File>
+                                                        </FileTreeContent>
+                                                    </FileTreeItem>
+                                                </FileTree>
                                                 <File>page.tsx</File>
-                                                <File>blog.ts</File>
                                             </FileTreeContent>
                                         </FileTreeItem>
                                     </FileTree>
-                                    <File>page.tsx</File>
                                 </FileTreeContent>
                             </FileTreeItem>
                         </FileTree>
