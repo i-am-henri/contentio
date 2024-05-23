@@ -14,6 +14,7 @@ import { generatePageTemplate } from "../../templates/page.js";
 import { generateConfigTemplate } from "../../templates/config.js";
 import { error } from "../../functions/error.js";
 import checkConfig from "../../functions/check-config.js";
+import { exec } from "child_process";
 /*
     Init a new project with contentio. This is the init command.
     This command creates a config.contentio.json file on the root of your project. 
@@ -99,8 +100,18 @@ Init a new Contentio project with the cli.
         contentDir: "content",
         useContentTabGroup: true
     }))
+
+    spinner.text = "installing the required dependencys with npm"
+    
+    // installing the required dependencys
+    exec("npm i next-remote-mdx gray-matter", (err) => {
+        if (err) error({
+            message: err.message
+        })
+    })
+
     // stop the loading spinner, all files are created now
     spinner.stop()
-    
+
     console.log(chalk.green("all done => want to help? https://git.new/contentio"))
 }
