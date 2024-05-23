@@ -21,9 +21,12 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Metadata } from "next";
+import matter from "gray-matter"
+
 
 export const metadata: Metadata = {
-    title: "Docs"
+    title: "Docs",
+    description: "The contentio docs for the cli."
 }
 
 function AppFileDir() {
@@ -125,11 +128,11 @@ function SrcFileDir() {
 };
 export default async function Docs() {
     const raw = (await fs.promises.readFile("content/docs/index.mdx")).toString()
-    const withoutFrontmatter: string = raw.replace(/---[sS]*?---/, '');
+    const mdx = matter(raw, )
 
     return <div className="bg-[#151515] min-h-screen text-white flex items-start justify-center">
         <div className="w-[700px]">
-            <MDXRemote components={{ Viewer, Link, FileTree, FileTreeItem, File, FileTreeContent, FileTreeTrigger, Tabs, SrcFileDir, AppFileDir, ...standartComponents }} source={withoutFrontmatter} />
+            <MDXRemote components={{ Viewer, Link, FileTree, FileTreeItem, File, FileTreeContent, FileTreeTrigger, Tabs, SrcFileDir, AppFileDir, ...standartComponents }} source={mdx.content} />
         </div>
     </div>
 }
