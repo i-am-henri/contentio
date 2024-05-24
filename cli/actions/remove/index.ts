@@ -1,10 +1,10 @@
 import chalk from "chalk"
 import prompts, { Choice } from "prompts";
-import checkConfig from "../../functions/check-config";
-import getConfig from "../../functions/get-config";
+import checkConfig from "../../functions/check-config.js";
+import getConfig from "../../functions/get-config.js";
 import fs, { rm, rmSync, rmdir, rmdirSync } from "node:fs"
-import Folder from "../../functions/src-folder";
-import { error } from "../../functions/error";
+import Folder from "../../functions/src-folder.js";
+import { error } from "../../functions/error.js";
 
 /*
     Contentio 2024

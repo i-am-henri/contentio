@@ -6,7 +6,6 @@ import chalk from "chalk";
 import { existsSync, mkdirSync, writeFile, writeFileSync } from "fs";
 import ora from "ora"
 import prompts from "prompts"
-import { terminalLinkSupported } from "../../functions/link.js";
 import terminalLink from "terminal-link";
 import Folder from "../../functions/src-folder.js";
 import { generateScriptTemplate } from "../../templates/script.js";
