@@ -37,14 +37,10 @@ async function addRoute(name: string) {
     mkdirSync(path, { recursive: true });
 
     // creating the folder for the content
-    mkdirSync("./content", { recursive: true })
+    mkdirSync("./content/" + name, { recursive: true })
 
     // adding content to the 2 folders.
-    writeFile(scriptPath, generateScriptTemplate(name), (err) => {
-        if (err) error({
-            message: err.message
-        })
-    })
+    
     writeFile(pagePath, generatePageTemplate(name), (err) => {
         if (err) error({
             message: err.message
@@ -63,6 +59,11 @@ async function addRoute(name: string) {
 
     conf.routes.push({
         name
+    })
+    writeFile(scriptPath, JSON.stringify(conf), (err) => {
+        if (err) error({
+            message: err.message
+        })
     })
     writeFile(pagePath, JSON.stringify(conf), (err) => {
         if (err) error({
