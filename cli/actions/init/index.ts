@@ -66,7 +66,6 @@ Init a new Contentio project with the cli.
             } else if (hasSpecialCharacters) {
                 return "[i] special characters are not allowed."
             }
-
             return true
         }
     });
@@ -85,7 +84,7 @@ Init a new Contentio project with the cli.
     const pagePath = path + `/page.tsx`
     const configPath = `./config.contentio.json`
     const galleryPath = folder == "app"
-        ? `/app/(content)/${route}/page.tsx`
+        ? `./app/(content)/${route}/page.tsx`
         : `./src/app/(content)/${route}/page.tsx`
     // create the folder with all parent folders
     mkdirSync(path, { recursive: true });
@@ -102,7 +101,7 @@ Init a new Contentio project with the cli.
         contentDir: "content",
         useContentTabGroup: true
     }))
-    writeFileSync(galleryPath, generateGalleryTemplate())
+    writeFileSync(galleryPath, generateGalleryTemplate(response.route))
 
 
     spinner.text = "installing the required dependencys with npm"

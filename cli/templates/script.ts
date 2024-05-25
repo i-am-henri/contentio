@@ -4,7 +4,7 @@
  * @param name string
  */
 export const generateScriptTemplate = (name: string): string => {
-    return `// file added by next-docs
+    return `// Contentio 2024
 import { notFound } from "next/navigation";
 import matter from "gray-matter"
 import fs from "node:fs"

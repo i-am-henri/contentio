@@ -1,12 +1,10 @@
 /**
  * Generate the template for the gallery.
  */
-export const generateGalleryTemplate = (): string => {
+export const generateGalleryTemplate = (name: string): string => {
     return `// Contentio 2024
-import matter from "gray-matter"
-import fs from "node:fs"
-import z from "zod"
-import {type FrontMatter, getGallery} from "./[slug]/script
+import {type FrontMatter, getGallery} from "./[slug]/${name}"
+
 export default async function Gallery() {
     const data: FrontMatter[] = await getGallery()
     return (
