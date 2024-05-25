@@ -1,6 +1,9 @@
 {
     "routes": [
         {
+            "name": "changelog"
+        },
+        {
             "name": "blog"
         }
     ],

@@ -7,7 +7,7 @@
   "module": "esnext",
   "bin": "./build/index.js",
   "scripts": {
-    "dev": "tsc  && node ./build/index.js",
+    "dev": "tsc && node ./build/index.js",
     "bundle": "tsup ./index.ts"
   },
   "keywords": [
