@@ -10,7 +10,7 @@ import matter from "gray-matter"
 import fs from "node:fs"
 import z from "zod"
 
-interface FrontMatter {
+export interface FrontMatter {
     title: string
 }
 const FrontMatterSchema = z.object({

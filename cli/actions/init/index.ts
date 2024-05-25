@@ -14,6 +14,7 @@ import { generateConfigTemplate } from "../../templates/config.js";
 import { error } from "../../functions/error.js";
 import checkConfig from "../../functions/check-config.js";
 import { exec } from "child_process";
+import { generateGalleryTemplate } from "../../templates/gallery.js";
 /*
     Init a new project with contentio. This is the init command.
     This command creates a config.contentio.json file on the root of your project. 
@@ -101,7 +102,7 @@ Init a new Contentio project with the cli.
         contentDir: "content",
         useContentTabGroup: true
     }))
-    writeFileSync(galleryPath, )
+    writeFileSync(galleryPath, generateGalleryTemplate())
 
 
     spinner.text = "installing the required dependencys with npm"
