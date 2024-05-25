@@ -1,27 +1,21 @@
-/**
- * Generate the template for the script. 
- * Please provide the route-name!
- * @param name string
- */
-export const generateScriptTemplate = (name: string): string => {
-    return `// Contentio 2024
+// Contentio 2024
 import { notFound } from "next/navigation";
 import matter from "gray-matter"
 import fs from "node:fs"
 import z from "zod"
 
 export interface FrontMatter {
-    title: string
+    title: string,
 }
 const FrontMatterSchema = z.object({
     title: z.string()
 })
 export async function getGallery(): Promise<FrontMatter[]> {
     let frontmatter: FrontMatter[] = []
-    const files = await fs.promises.readdir("content/${name}")
+    const files = await fs.promises.readdir("content/blog")
     for await (const file of files) {
         // get the content of the file
-        const content: string = fs.readFileSync("content/${name}/" + file).toString()
+        const content: string = fs.readFileSync("content/blog/" + file).toString()
         const data = matter(content).data as FrontMatter
         const parse = await FrontMatterSchema.safeParseAsync(data)
 
@@ -34,7 +28,7 @@ export async function getGallery(): Promise<FrontMatter[]> {
 
 export async function getMarkdown(slug: string): Promise<string> {
     let raw: string = ""
-    await fs.promises.readFile("content/${name}/" + slug + ".mdx", 'utf-8').then((data) => {
+    await fs.promises.readFile("content/blog/" + slug + ".mdx", 'utf-8').then((data) => {
         raw = data;
     }).catch((err) => {
         console.log(err.code)
@@ -44,4 +38,4 @@ export async function getMarkdown(slug: string): Promise<string> {
         notFound()
     }
     return raw
-}`}
+}

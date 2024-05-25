@@ -1,0 +1,9 @@
+{
+    "routes": [
+        {
+            "name": "blog"
+        }
+    ],
+    "contentDir": "content",
+    "useTabGroupe": true
+}
