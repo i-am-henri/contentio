@@ -83,7 +83,9 @@ Init a new Contentio project with the cli.
     const scriptPath = path + `/${route}.ts`
     const pagePath = path + `/page.tsx`
     const configPath = `./config.contentio.json`
-
+    const galleryPath = folder == "app"
+        ? `/app/(content)/${route}/page.tsx`
+        : `./src/app/(content)/${route}/page.tsx`
     // create the folder with all parent folders
     mkdirSync(path, { recursive: true });
 
@@ -99,11 +101,13 @@ Init a new Contentio project with the cli.
         contentDir: "content",
         useContentTabGroup: true
     }))
+    writeFileSync(galleryPath, )
+
 
     spinner.text = "installing the required dependencys with npm"
     
     // installing the required dependencys
-    exec("npm i next-remote-mdx gray-matter", (err) => {
+    exec("npm i next-remote-mdx gray-matter zod", (err) => {
         if (err) error({
             message: err.message
         })
