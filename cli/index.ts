@@ -25,7 +25,6 @@ program.command('init')
 program.command('add')
   .description('Init a first route, add the folder for your content and create a "(content)" tabgroup.')
   .action(async (str, options) => {
-    console.log(options)
     await add(options.args[0])
   });
 
