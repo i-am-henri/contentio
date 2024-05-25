@@ -30,8 +30,6 @@ ${chalk.cyan("Contentio 2024")}
 
 Init a new Contentio project with the cli.
     `)
-    // warn the user to use a supported version of nextjs
-    console.warn(chalk.yellow("[i] You must use NextJs version 13 or higher! Route-groups are not supported in lower versions."))
 
     // checking if you are on the root of your project
     if (!existsSync("./package.json") || !existsSync("./node_modules")) {
@@ -107,7 +105,7 @@ Init a new Contentio project with the cli.
     spinner.text = "installing the required dependencys with npm"
     
     // installing the required dependencys
-    exec("npm i next-remote-mdx gray-matter zod", (err) => {
+    exec("npm i next-mdx-remote gray-matter zod", (err) => {
         if (err) error({
             message: err.message
         })
