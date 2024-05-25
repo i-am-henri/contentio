@@ -10,7 +10,6 @@ import getConfig from "../../functions/get-config.js";
 import { config } from "../../types/config.js";
 import fs, { mkdirSync, writeFile, writeFileSync } from "node:fs"
 import Folder from "../../functions/src-folder.js";
-import { generateScriptTemplate } from "../../templates/script.js";
 import { generatePageTemplate } from "../../templates/page.js";
 import { generateConfigTemplate } from "../../templates/config.js";
 
@@ -22,6 +21,7 @@ async function addRoute(name: string) {
     if (!conf) error({
         message: "Content of config not found."
     })
+    console.log(conf)
     // creating the route-groupe folder
     const folder = Folder() === "app" ? "app" : "src/app";
 
@@ -46,25 +46,13 @@ async function addRoute(name: string) {
             message: err.message
         })
     })
-    writeFile(configPath, generateConfigTemplate({
-        route: route,
-        contentDir: "content",
-        useContentTabGroup: true
-    }), (err) => {
-        if (err) error({
-            message: err.message
-        })
-    })
-    mkdirSync("./content/" + route, { recursive: true })
+    mkdirSync("./content/" + name, { recursive: true })
 
     conf.routes.push({
-        name
+        name: name
     })
-    writeFile(scriptPath, JSON.stringify(conf), (err) => {
-        if (err) error({
-            message: err.message
-        })
-    })
+    console.log(conf)
+    writeFileSync(configPath, JSON.stringify(conf))
     writeFile(pagePath, JSON.stringify(conf), (err) => {
         if (err) error({
             message: err.message
