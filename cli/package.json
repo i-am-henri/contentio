@@ -1,6 +1,6 @@
 {
   "name": "contentio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a CLI to add content in form of mdx fast to your next application.",
   "main": "./build/index.js",
   "type": "module",
